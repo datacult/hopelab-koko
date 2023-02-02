@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        
+        <style>
+            #start, #end {
+                height: 50vh;
+            }
+
+            #force-placeholder {
+                position: sticky;
+                top:0;
+            }
+        </style>
+    </head>
+    <body>  
+        <div id="h-scroll">
+            <div id="force-placeholder"></div>
+            <div id="start" class="step"></div>
+            <div id="end" class="step"></div>
+        </div>
+    </body>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="scroller.js"></script>
+    <script src="horizontal.js"></script>
+    <script>
+        async function init(){
+            
+            // let data = await d3.csv('bars.csv', d3.autoType)
+
+            // let mapping = {x:'category', y:'value'}
+
+            let force_vis = force()
+
+            // let launch_vis = launch()
+        }
+        init()
+
+    </script>
+
+</html>
