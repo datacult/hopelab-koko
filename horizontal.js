@@ -45,23 +45,31 @@ let force = ((state = 'not koko',selector = '#force-placeholder') => {
     ////////////////////////////////////
     //////////////wrangle///////////////
     ////////////////////////////////////
-    var value
+    var value, tree_count
     if (state == 'koko'){
         value = 90
+        tree_count = 12
     } else {
         value = 30
+        tree_count = 8
     }
 
     var node_data = [], num_boxes = 100;
     var caught = Math.round(num_boxes*(value/100))
 
     for (let i = 0; i < caught; i++) {
-        node_data.push({ "id": i+1, "group": 1, "fill": '#ffffff', "r": 20})
+        node_data.push({ "id": i+1, "group": 1, "fill": '#ffffff', "r": 20, "px":0, "py":0})
       }
 
     for (let i = 0; i < (num_boxes-caught); i++) {
-        node_data.push({ "id": caught+1+i, "group": 1, "fill": '#c5c5c5', "r": 20})
+        node_data.push({ "id": caught+1+i, "group": 1, "fill": '#c5c5c5', "r": 20, "px":0, "py":0})
       }
+
+    for (let i = 0; i < (tree_count); i++) {
+        node_data[i].group = 2
+        node_data[i].px = Math.floor(Math.random() * (width/8)) + width*3/5
+        node_data[i].py = Math.floor(Math.random() * (height/2)) + height/4
+    }
 
     // var placeholder = 2
     // node_data.splice(placeholder, 0, { "id": num_boxes+1, "group": 1, "fill": '#ffffff', "r": 225});
@@ -126,7 +134,6 @@ let force = ((state = 'not koko',selector = '#force-placeholder') => {
         .tick(0)
 
 
-
     ////////////////////////////////////
     //////////// add to DOM ////////////
     ////////////////////////////////////  
@@ -161,7 +168,6 @@ let force = ((state = 'not koko',selector = '#force-placeholder') => {
     // d3.select('#word'+rect_select)  
     // .style("fill",'none')
     // .style('stroke','none')
-
     
 
     // node_data.splice(placeholder,1)
@@ -176,11 +182,9 @@ let force = ((state = 'not koko',selector = '#force-placeholder') => {
     .on('end', () => {
       d3.selectAll('.forceword').each(function () {
         const thisD3 = d3.select(this)
-        console.log(thisD3.attr('id').split('d')[1])
         
         grid_layout[thisD3.attr('id').split('d')[1]-1].sim_x = thisD3.attr('x')
         grid_layout[thisD3.attr('id').split('d')[1]-1].sim_y = thisD3.attr('y')
-        // console.log(thisD3.attr('cx'), thisD3.attr('cy'))
       })
     }) 
 
@@ -220,7 +224,6 @@ function updatePosition(percent) {
    node_data.forEach(d => {
     calcGrid(d.id)
 
-
     var grid_position_x = d3.scaleLinear()
     .domain([0,1])
     .range([grid_layout[d.id-1].sim_x,grid_layout[d.id-1].x])
@@ -237,6 +240,47 @@ function updatePosition(percent) {
    })
 }
 
+function updatePosition2(percent){
+    node_data.forEach(d => {
+
+        if (d.group == 1) {
+
+            var leave_position_x = d3.scaleLinear()
+            .domain([0.1,1])
+            .range([grid_layout[d.id-1].x,grid_layout[d.id-1].x-(width*1.1)])
+    
+            d3.select('#word'+d.id)
+                .attr('x',leave_position_x(percent))
+        } else {
+            var position_x = d3.scaleLinear()
+            .domain([0.1,1])
+            .range([grid_layout[d.id-1].x,d.px])
+
+            var position_y = d3.scaleLinear()
+            .domain([0.1,1])
+            .range([grid_layout[d.id-1].y,d.py])
+    
+            d3.select('#word'+d.id)
+                .attr('x',position_x(percent))
+                .attr('y',position_y(percent))
+        }
+    })
+}
+
+function updatePosition3(percent){
+    node_data.forEach(d => {
+
+        if (d.group != 1) {
+            var position_x = d3.scaleLinear()
+            .domain([1,2])
+            .range([d.px,d.px-width*2.9/5])
+    
+            d3.select('#word'+d.id)
+                .attr('x',position_x(percent))
+        }
+    })
+}
+
 // setup scroll functionality
 var scroll = scroller()
 .container(d3.select('#h-scroll'));
@@ -245,14 +289,17 @@ var scroll = scroller()
 scroll(d3.selectAll('.step'));
 
 scroll.on('progress', function (index, progress) {
+// console.log(index)
 // console.log(progress)
-if (progress > 0 & progress < 1){
-    updatePosition(progress)
-} else if (progress <= 0){
-    updatePosition(0)
-} else {
-    updatePosition(1)
-}
+    if (index == 1 && progress > 0 && progress < 1){
+        updatePosition(progress)
+    } else if (index == 1 && progress <= 0){
+        updatePosition(0)
+    } else if (index == 2 && progress > 0.1 && progress < 1) {
+        updatePosition2(progress)
+    } else if (index == 2 && progress >= 1){
+        updatePosition3(progress)
+    }
 });
 
 })
