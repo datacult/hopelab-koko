@@ -1,0 +1,48 @@
+{
+    "name": "detection",
+    "children": [
+        {
+        "name": "crisis lines",
+        "children": [
+        {
+            "name": "contact",
+            "value": 3938
+        },
+        {
+            "name": "concern walkthrough",
+            "value": 3416
+        }
+        ]
+        },
+        {  
+        "name": "peer support",
+        "children": [
+            {
+            "name": "various platforms",
+            "value": 3938
+            }
+        ]
+        },
+        {  
+        "name": "self help courses",
+        "children": [
+            {
+            "name": "improve your mood",
+            "value": 3938
+            },
+            {
+            "name": "manage self harm",
+            "value": 3416
+            },
+            {
+            "name": "body image",
+            "value": 3416
+            }
+        ]
+        },
+        {  
+        "name": "safety plan",
+        "value": 3416 
+        }
+    ]
+   }
