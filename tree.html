@@ -5,20 +5,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
         
-        <!-- <style>
-            #start, #middle, #end {
-                height: 100vh;
+        <style>
+            .node-group1, .link_group1 {
+                transition: 1.5s;
             }
 
-            #start {
-                background-color: bisque;
+            .node-group0, .link_group0 {
+                transition: 1s;
             }
 
-            #force-placeholder {
-                position: sticky;
-                top:0;
+            #tree-placeholder {
+                background-color: #22194D;
             }
-        </style> -->
+        </style>
     </head>
     <body>  
         <div id="h-scroll">
@@ -34,7 +33,7 @@
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <!-- <script src="scroller.js"></script> -->
-    <script src="tree.js"></script>
+    <script src="tree_new.js"></script>
     <script>
         async function init(){
             
@@ -42,20 +41,19 @@
 
             var intervention_select = document.getElementById("koko-nokoko");
             var intervention = intervention_select.value;
-            intervention_select.addEventListener("change", function() {
-    				intervention = intervention_select.value
-                    // tree_vis.update(intervention)
-                    console.log(event.target.value)
-            });
 
-            //  FileAttachment("flare.json").json()
-            let tree_vis = Tree(flow,{
-                label: d => d.name,
-                title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}`, // hover text
-                link: (d, n) => `https://github.com/prefuse/Flare/${n.children ? "tree" : "blob"}/master/flare/src/${n.ancestors().reverse().map(d => d.data.name).join("/")}${n.children ? "" : ".as"}`,
+            let tree_vis = tree(flow,{
                 width: 1152,
                 intervention_type: intervention
             })
+
+            intervention_select.addEventListener("change", function() {
+    				intervention = intervention_select.value
+                    tree_vis.update(intervention)
+            });
+
+            //  FileAttachment("flare.json").json()
+            
 
                             // let launch_vis = launch()
         }

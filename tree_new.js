@@ -1,0 +1,153 @@
+'use strict'
+
+let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
+
+    var tree = d3.tree, 
+        id = Array.isArray(data) ? d => d.id : null, 
+        parentId = Array.isArray(data) ? d => d.parentId : null,
+        r = 40,
+        padding = 1,
+        stroke = "#B5B5B5", // stroke for links
+        strokeWidth = 2, // stroke width for links
+        strokeOpacity = 1, // stroke opacity for links
+        strokeLinejoin, // stroke line join for links
+        strokeLinecap, // stroke line cap for links
+        curve = d3.curveBumpX,
+        path, children, sort, height,
+        width = data_map.width,
+        intervention_type = data_map.intervention_type
+
+
+    // If id and parentId options are specified, or the path option, use d3.stratify
+    // to convert tabular data to a hierarchy; otherwise we assume that the data is
+    // specified as an object {children} with nested objects (a.k.a. the “flare.json”
+    // format), and use d3.hierarchy.
+    const root = path != null ? d3.stratify().path(path)(data)
+        : id != null || parentId != null ? d3.stratify().id(id).parentId(parentId)(data)
+        : d3.hierarchy(data, children);
+  
+    // Sort the nodes.
+    if (sort != null) root.sort(sort);
+  
+  
+    // Compute the layout.
+    // console.log(root)
+    const dx = 60;
+    const dy = 175//width / (root.height + padding);
+    tree().nodeSize([dx, dy])(root);
+
+    // console.log(dy)
+    
+  
+    // Center the tree.
+    let x0 = Infinity;
+    let x1 = -x0;
+    root.each(d => {
+      if (d.x > x1) x1 = d.x;
+      if (d.x < x0) x0 = d.x;
+    });
+  
+    // Compute the default height.
+    if (height === undefined) height = x1 - x0 + dx * 2;
+  
+    // Use the required curve
+    if (typeof curve !== "function") throw new Error(`Unsupported curve`);
+    // console.log(curve)
+  
+    const svg = d3.select('#tree-placeholder').append("svg")
+        .attr("viewBox", [-dy * padding / 2, x0 - dx, width, height])
+        .attr("width", width)
+        .attr("height", height)
+        .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 10);
+
+    var lnk = root.links()
+  
+    svg.append("g")
+        .attr("fill", "none")
+        .attr("stroke", stroke)
+        .attr("stroke-opacity", strokeOpacity)
+        .attr("stroke-linecap", strokeLinecap)
+        .attr("stroke-linejoin", strokeLinejoin)
+        .attr("stroke-width", strokeWidth)
+      .selectAll("path")
+        .data(lnk)
+        .join("path")
+        .attr('class',d => 'link_group'+d.target.data.value)
+        .attr('id',d => d.target.data.name+'_path')
+          .attr("d", d3.linkHorizontal(curve)
+            //   .x(d => {
+            //     return d.depth == 2 ? d.y/2 : d.y
+            //    })
+              .x(d => d.y)
+              .y(d => d.x));
+
+
+    const node = svg.append("g")
+      .selectAll(".node-group")
+      .data(root.descendants())
+      .join("g")
+      .attr('class',d => 'node-group'+d.data.value)
+      .attr('id',d => d.data.name)
+      .attr('opacity',1)
+      .attr("transform", d => `translate(${d.y-r*0.5},${d.x})`);
+
+    node.append('rect')
+    .attr("opacity", d => d.depth == 2 ? 0 : 1)
+    .attr('fill','#22194D')
+    .attr("height", r*1.25)
+    .attr('width',r*5.25)
+    .attr('transform','translate('+r/-7.5+','+r*-.625+')')
+
+    node.append('rect')
+    .attr('fill','white')
+    .attr("opacity", d => d.depth == 2 ? 0 : .3)
+    .attr("height", r)
+    .attr('width',r*5)
+    .attr('rx',10)
+    .attr('transform','translate(0,'+r/-2+')')
+
+    d3.select('#detection').attr('opacity',0)
+
+    node.append("text")
+        .attr("dy", "0.32em")
+        .attr('x',r*5/2)
+        .attr("text-anchor",'middle')
+        .attr('fill','white')
+        .attr('font-size',16)
+        .text(d => d.data.name);
+  
+    // return svg.node();
+var view = 0, og_position_call, og_position_text;
+
+if (view == 0){
+    og_position_call = document.getElementById('call').getAttribute('transform')
+    og_position_text = document.getElementById('text').getAttribute('transform')
+}
+
+  function update(val) {
+    if (val == 'koko'){
+        d3.select('#call').attr('transform',og_position_call)
+        d3.select('#call_path').attr('d','M350,-255C437.5,-255,437.5,-315,525,-315')
+        d3.select('#text').attr('transform',og_position_text)
+        d3.select('#text_path').attr('d','M350,-255C437.5,-255,437.5,-255,525,-255')
+        d3.selectAll('.node-group0').attr('opacity',1)
+        d3.selectAll('.link_group0').attr('opacity',1)
+        // console.log()
+    } else {
+        d3.select('#call').attr('transform','translate(250,-75)')
+        d3.select('#call_path').attr('d','M0,0C125,0,125,-75,250,-75')
+        d3.select('#text').attr('transform','translate(250,75)')
+        d3.select('#text_path').attr('d','M0,0C125,0,125,75,250,75')
+        d3.selectAll('.node-group0').attr('opacity',0)
+        d3.selectAll('.link_group0').attr('opacity',0)
+        // document.getElementById('contact').getAttribute('transform')
+    }
+  }
+
+return {
+    update: update,
+}
+
+})
