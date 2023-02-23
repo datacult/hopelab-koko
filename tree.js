@@ -13,8 +13,8 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         strokeLinejoin, // stroke line join for links
         strokeLinecap, // stroke line cap for links
         curve = d3.curveBumpX,
-        path, children, sort, height,
-        width = data_map.width,
+        path, children, sort, //height,
+        // width = data_map.width,
         intervention_type = data_map.intervention_type
 
 
@@ -48,19 +48,53 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     });
   
     // Compute the default height.
-    if (height === undefined) height = x1 - x0 + dx * 2;
+    // if (height === undefined) height = x1 - x0 + dx * 2;
   
     // Use the required curve
     if (typeof curve !== "function") throw new Error(`Unsupported curve`);
     // console.log(curve)
   
-    const svg = d3.select('#tree-placeholder').append("svg")
-        .attr("viewBox", [-dy * padding / 2, x0 - dx, width, height])
-        .attr("width", width)
-        .attr("height", height)
-        .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10);
+    // const svg = d3.select('#tree-placeholder').append("svg")
+    //     .attr("viewBox", [-dy * padding / 2, x0 - dx, width, height])
+    //     .attr("width", width)
+    //     .attr("height", height)
+    //     .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+    //     .attr("font-family", "sans-serif")
+    //     .attr("font-size", 10);
+
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+
+    // margins for SVG
+    const margin = isMobile ? {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10
+    } : {
+        left: 10,
+        right: 10,
+        top: 10,
+        bottom: 10
+    }
+
+    // responsive width & height
+    const svgWidth = 1440 
+    const svgHeight = 850//900 
+    // const svgWidth = window.innerWidth
+    // const svgHeight = window.innerHeight
+
+    // helper calculated variables for inner width & height
+    const height = svgHeight - margin.top - margin.bottom
+    const width = svgWidth - margin.left - margin.right
+
+    // add SVG
+    // d3.select(`${selector} svg`).remove();
+
+    const svg = d3.select('#tree-placeholder')
+        .append('svg')
+        .attr("viewBox", `${-dy * padding / 2} ${x0 - dx} ${svgWidth} ${svgHeight}`)
+        .append('g')
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     var lnk = root.links()
   
@@ -117,6 +151,16 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .attr('fill','white')
         .attr('font-size',16)
         .text(d => d.data.name);
+
+    svg.append('line')
+        .attr('class','int_line')
+        .attr('stroke','#B5B5B5')
+        .attr('stroke-width',3)
+        .attr('stroke-linecap','round')
+        .attr('x1',-100)
+        .attr('x2',0)
+        .attr('y1',0)
+        .attr('y2',0)
   
     // return svg.node();
 // console.log(root.descendants())
@@ -143,8 +187,8 @@ if (view == 0){
     });
 
 }
-console.log(koko_positions)
-  function update(val) {
+// console.log(koko_positions)
+  function tree_update(val) {
     if (val == 'koko'){
         d3.select('#call').attr('transform',og_position_call)
         d3.select('#call_path').attr('d','M350,-255C437.5,-255,437.5,-315,525,-315')
@@ -171,7 +215,7 @@ console.log(koko_positions)
   }
 
 return {
-    update: update,
+    tree_update: tree_update,
 }
 
 })

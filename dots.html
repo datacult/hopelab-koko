@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        
+        <style>
+            .step {
+                height: 100vh;
+            }
+
+            /* #start {
+                background-color: bisque;
+            } */
+
+            #dot-placeholder {
+                position: sticky;
+                top:0;
+                background-color: #22194D;
+            }
+
+            .dots {
+                transition: 1s;
+            }
+        </style>
+    </head>
+    <body>  
+        <div id="scroll">
+            <div id="dot-placeholder"></div>
+            <div id="distress" class="step"></div>
+            <div id="suicide" class="step"></div>
+            <div id="social" class="step"></div>
+        </div>
+    </body>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="dots.js"></script>
+    <script>
+        async function init(){
+            
+            // let data = await d3.csv('bars.csv', d3.autoType)
+
+            // let mapping = {x:'category', y:'value'}
+
+            let dot_vis = dots()
+
+            // let launch_vis = launch()
+        }
+        init()
+
+    </script>
+
+</html>

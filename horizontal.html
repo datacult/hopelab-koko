@@ -6,39 +6,107 @@
         <title></title>
         
         <style>
-            #start, #middle, #end {
+            #keywords, #tree-map, #intervention, #tree-placeholder {
                 height: 100vh;
+                width: 100vw;
+                flex: 0 0 auto;
             }
 
             #start {
                 background-color: bisque;
             }
 
-            #force-placeholder {
+            #force-placeholder, #koko-nokoko {
                 position: sticky;
                 top:0;
+                /* left:0; */
             }
+
+            #koko-nokoko {
+               z-index: 100;
+            }
+
+            .node-group1, .link_group1 {
+                transition: 1.5s;
+            }
+
+            .node-group0, .link_group0 {
+                transition: 1.5s;
+            }
+
+            #h-scroll {
+                background-color: #22194D;
+                /* display: flex;
+                flex-direction: row; */
+            }
+
+            #h2-scroll {
+                background-color: #22194D;
+                /* display: flex;
+                flex-direction: row; */
+            }
+
+            .force-headline {
+                transition: 1.5s;
+            }
+
+            .annotation {
+                font-family: Avenir;
+            }
+
+            /* #intervention {
+                background: lightskyblue
+            } */
         </style>
     </head>
     <body>  
         <div id="h-scroll">
-            <div id="force-placeholder"></div>
-            <div id="start" class="step"></div>
-            <div id="middle" class="step"></div>
-            <div id="end" class="step"></div>
+            <select name="state" id="koko-nokoko">
+                <option value="koko">Koko</option>
+                <option value="nokoko">Without Koko</option>
+            </select>
+            <div id="h2-scroll">
+                <div id="force-placeholder">
+                </div>
+                <div id="keywords" class="step"></div>
+                <div id="tree-map" class="step"></div>
+                <div id="intervention" class="step"></div>
+            </div>
+            <div id="tree-placeholder" class="step"></div>
         </div>
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="scroller.js"></script>
     <script src="horizontal.js"></script>
+    <script src="tree.js"></script>
+    <script src="force_text.js"></script>
     <script>
         async function init(){
             
             // let data = await d3.csv('bars.csv', d3.autoType)
 
             // let mapping = {x:'category', y:'value'}
+            let flow = await d3.json('tree.json', d3.autoType)
 
-            let force_vis = force()
+            let tree_vis = tree(flow,{
+                width: 1152,
+                intervention_type: intervention
+            })
+
+            var intervention_select = document.getElementById("koko-nokoko");
+            var intervention = intervention_select.value;
+           
+            let force_vis = force(state = intervention)
+            let f_text = force_text(state = intervention)
+
+            intervention_select.addEventListener("change", function() {
+    				intervention = intervention_select.value
+                    tree_vis.tree_update(intervention)
+                    force_vis.block_update(intervention)
+                    f_text.ftext_update(intervention)
+
+            });
+
 
             // let launch_vis = launch()
         }
