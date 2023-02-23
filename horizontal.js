@@ -172,27 +172,74 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     ////////////////////////////////////  
 
     var rect_height = 25, rect_width = 75, rect_width_tree = 70, rect_height_tree = 50;
-    const node = svg.append("g")
-        .attr("stroke", "#fff")
-        .attr("stroke-width", 1.5)
-        .selectAll(".forceword")
-        .data(nodes)
-        .join('rect')
-        .attr("class", "forceword")
-        .attr("class", d=>d.class)
-        .attr('id',d=>'word'+d.id)
-        .attr("height",rect_height)
-        .attr("width", rect_width)
-        .style("fill","white")
-        .style("fill-opacity",d => d.opacity)
-        .style("opacity",d => d.force == "no" ? 0 : 1)
-        .style('stroke',d => d.opacity == .45 ? '#ffffff' : '#ffffff00')
-        .call(drag(simulation));
+    // const node = svg.append("g")
+    //     .attr("stroke", "#fff")
+    //     .attr("stroke-width", 1.5)
+    //     .selectAll(".forceword")
+    //     .data(nodes)
+    //     .join('rect')
+    //     .attr("class", "forceword")
+    //     .attr("class", d=>d.class)
+    //     .attr('id',d=>'word'+d.id)
+    //     .attr("height",rect_height)
+    //     .attr("width", rect_width)
+    //     .style("fill","white")
+    //     .style("fill-opacity",d => d.opacity)
+    //     .style("opacity",d => d.force == "no" ? 0 : 1)
+    //     .style('stroke',d => d.opacity == .45 ? '#ffffff' : '#ffffff00')
+    //     .call(drag(simulation));
 
+    const node = svg.append("g")
+            .selectAll(".forceword")
+            .data(nodes)
+            .join('g')
+            .attr("class", "forceword")
+            .attr("class", d=>'group'+d.class)
+            .attr('id',d=>'group'+'word'+d.id)
+            .call(drag(simulation));
+
+    const node_text = node
+            .selectAll(".forceword_word")
+            .data(d=>[d])
+            .join('text')
+            .attr("class", "forceword_word")
+            .attr("class", d=>'text'+d.class)
+            .attr('id',d=>'text'+'word'+d.id)
+            .text('keywords')
+            .style('text-anchor','middle')
+            .style("fill","white")
+            .style('font-size',16)
+            .style('filter','blur(3px)')
+            .style("opacity",d => d.force == "no" ? 0 : 1);
+
+    const node_rect = node
+            .selectAll(".forceword_rect")
+            .data(d=>[d])
+            .join('rect')
+            .attr("class", "forceword_rect")
+            .attr("class", d=>d.class)
+            .attr('id',d=>'word'+d.id)
+            .attr("height",rect_height)
+            .attr("width", rect_width)
+            .style("fill","white")
+            .style("fill-opacity",d => d.opacity)
+            .style("opacity",d => d.force == "no" ? 0 : 1)
+            .style('stroke',d => d.opacity == .45 ? '#ffffff' : '#ffffff00')
+            .style('stroke-width','1.5px');
+
+    var text_x = rect_width/2, text_y = 18
 
     simulation.on("tick", () => {
 
         node
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+
+        node_text
+            .attr("x", d => d.x+text_x)
+            .attr("y", d => d.y+text_y)
+
+        node_rect
             .attr("x", d => d.x)
             .attr("y", d => d.y)
         
@@ -344,8 +391,8 @@ function calcGrid(value) {
         .attr('stroke','#B5B5B5')
         .attr('stroke-width',3)
         .attr('stroke-linecap','round')
-        .attr('x1',width+10)
-        .attr('x2',width+10)
+        .attr('x1',width+50)
+        .attr('x2',width+50)
         .attr('y1',height/2)
         .attr('y2',height/2)
 
@@ -377,6 +424,14 @@ var size_height = d3.scaleLinear()
     .domain([0,1])
     .range([rect_height,rect_height_tree])
 
+var text_position_x = d3.scaleLinear()
+    .domain([0,.95])
+    .range([rect_width/2,rect_width_tree/2])
+
+var text_position_y = d3.scaleLinear()
+    .domain([0,.95])
+    .range([(rect_height/2+4),(rect_height_tree/2+4)])
+
 var size_width2 = d3.scaleLinear()
     .domain([0,.5,1])
     .range([rect_width_tree,rect_width,rect_width])
@@ -384,6 +439,14 @@ var size_width2 = d3.scaleLinear()
 var size_height2 = d3.scaleLinear()
     .domain([0,.5,1])
     .range([rect_height_tree,rect_height,rect_height])
+
+var text_width2 = d3.scaleLinear()
+        .domain([0,.5,1])
+        .range([rect_width_tree/2,rect_width/2,rect_width/2])
+    
+var text_height2 = d3.scaleLinear()
+        .domain([0,.5,1])
+        .range([rect_height_tree/2+4,rect_height/2+4,rect_height/2+4])
 
 var text_opacity = d3.scaleLinear()
     .domain([.05,.25])
@@ -407,7 +470,7 @@ var text_pos2 = d3.scaleLinear()
 
 var line_pos = d3.scaleLinear()
 .domain([0,.5,1])
-.range([width+10,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5])
+.range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5])
 
 console.log((width/5)+width*2/5-width*2/5)
 
@@ -433,6 +496,11 @@ function updatePosition(percent) {
     var grid_position_y = d3.scaleLinear()
     .domain([0,.95])
     .range([grid_layout[d.id-1].sim_y,grid_layout[d.id-1].y])
+
+    d3.select('#textword'+d.id)
+    .attr('x',grid_position_x(percent)+text_position_x(percent))
+    .attr('y',grid_position_y(percent)+text_position_y(percent))
+    .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
 
     d3.select('#word'+d.id)
     .attr('x',grid_position_x(percent))
@@ -466,6 +534,9 @@ function updatePosition2(percent){
     
             d3.select('#word'+d.id)
                 .attr('x',leave_position_x(percent))
+
+            d3.select('#textword'+d.id)
+            .attr('x',leave_position_x(percent)+rect_width_tree/2)
         } else {
             var position_x = d3.scaleLinear()
             .domain([0,.5,1])
@@ -474,6 +545,10 @@ function updatePosition2(percent){
             var position_y = d3.scaleLinear()
             .domain([0,.5,1])
             .range([grid_layout[d.id-1].y,d.py,d.py])
+
+            d3.select('#textword'+d.id)
+            .attr('x',position_x(percent)+text_width2(percent))
+            .attr('y',position_y(percent)+text_height2(percent))
     
             d3.select('#word'+d.id)
                 .attr('x',position_x(percent))
