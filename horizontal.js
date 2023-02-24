@@ -172,22 +172,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     ////////////////////////////////////  
 
     var rect_height = 25, rect_width = 75, rect_width_tree = 70, rect_height_tree = 50;
-    // const node = svg.append("g")
-    //     .attr("stroke", "#fff")
-    //     .attr("stroke-width", 1.5)
-    //     .selectAll(".forceword")
-    //     .data(nodes)
-    //     .join('rect')
-    //     .attr("class", "forceword")
-    //     .attr("class", d=>d.class)
-    //     .attr('id',d=>'word'+d.id)
-    //     .attr("height",rect_height)
-    //     .attr("width", rect_width)
-    //     .style("fill","white")
-    //     .style("fill-opacity",d => d.opacity)
-    //     .style("opacity",d => d.force == "no" ? 0 : 1)
-    //     .style('stroke',d => d.opacity == .45 ? '#ffffff' : '#ffffff00')
-    //     .call(drag(simulation));
 
     const node = svg.append("g")
             .selectAll(".forceword")
