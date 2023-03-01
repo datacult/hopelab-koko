@@ -1,0 +1,70 @@
+<!-- inside head tag -->
+<style>
+
+    .node-group1, .link_group1 {
+        transition: 1.5s;
+    }
+
+    .node-group0, .link_group0 {
+        transition: 1.5s;
+    }
+
+    .force-headline {
+        transition: 1.5s;
+    }
+
+    .annotation {
+        font-family: Avenir;
+    }
+
+    .dots {
+        transition: 1s;
+    }
+</style>
+
+<!-- before </body> tag -->
+<script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://datacult.github.io/hopelab-koko/scroller.js"></script>
+    <script src="https://datacult.github.io/hopelab-koko/horizontal.js"></script>
+    <script src="https://datacult.github.io/hopelab-koko/tree.js"></script>
+    <script src="https://datacult.github.io/hopelab-koko/dots.js"></script>
+    <script src="https://datacult.github.io/hopelab-koko/research.js"></script>
+    <script src="https://datacult.github.io/hopelab-koko/area.js"></script>
+    <!-- <script src="force_text.js"></script> -->
+    <script>
+        async function init(){
+            
+            let dot_vis = dots()
+
+            let flow = await d3.json('https://datacult.github.io/hopelab-koko/tree.json', d3.autoType)
+
+            let tree_vis = tree(flow,{
+                width: 1152,
+                intervention_type: intervention
+            })
+
+            var intervention_select = document.getElementById("koko-nokoko");
+            var intervention = intervention_select.value;
+           
+            let force_vis = force(state = intervention)
+
+            intervention_select.addEventListener("change", function() {
+    				intervention = intervention_select.value
+                    tree_vis.tree_update(intervention)
+                    force_vis.block_update(intervention)
+                    f_text.ftext_update(intervention)
+
+            });
+
+            let res_vis = research('#research-placeholder')
+
+            let data = await d3.csv('https://datacult.github.io/hopelab-koko/impact.csv', d3.autoType)
+
+            let mapping = { x: 'Date', y: 'Users' }
+
+            let area_vis = area("#area", data, mapping)
+
+        }
+        init()
+
+    </script>
