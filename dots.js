@@ -13,10 +13,10 @@ let dots = ((selector = '#dot-placeholder') => {
 
     // margins for SVG
     const margin = isMobile ? {
-        left: 10,
-        right: 10,
-        top: 10,
-        bottom: 10
+        left: 25,
+        right: 25,
+        top: 25,
+        bottom: 25
     } : {
         left: 10,
         right: 10,
@@ -25,8 +25,8 @@ let dots = ((selector = '#dot-placeholder') => {
     }
 
     // responsive width & height
-    const svgWidth = 1440 
-    const svgHeight = 850//900 
+    const svgWidth = isMobile ? screen.width*1.5 : 1440 
+    const svgHeight = isMobile ? screen.height*1.5 : 850//900 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom

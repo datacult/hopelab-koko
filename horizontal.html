@@ -79,7 +79,7 @@
     <script src="scroller.js"></script>
     <script src="horizontal.js"></script>
     <script src="tree.js"></script>
-    <script src="force_text.js"></script>
+    <!-- <script src="force_text.js"></script> -->
     <script>
         async function init(){
             
@@ -97,7 +97,7 @@
             var intervention = intervention_select.value;
            
             let force_vis = force(state = intervention)
-            let f_text = force_text(state = intervention)
+            // let f_text = force_text(state = intervention)
 
             intervention_select.addEventListener("change", function() {
     				intervention = intervention_select.value

@@ -26,7 +26,7 @@ let research = ((selector) => {
 
     // responsive width & height
     const svgWidth = 720 
-    const svgHeight = 850//900 
+    const svgHeight = isMobile ? screen.height*1.6 : 850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
@@ -120,6 +120,8 @@ let research = ((selector) => {
     //     .attr('font-family','Avenir')
     //     .attr('font',18)
 
+    var label_size = isMobile ? 25 : 20, y_shift = isMobile ? 100 : 70
+
         svg.append('text')
             .text('Before')
             .attr('class','before')
@@ -127,7 +129,7 @@ let research = ((selector) => {
             .attr('y',top_padding/2)
             .attr('text-anchor','middle')
             .attr('font-family','Avenir')
-            .attr('font',20)
+            .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
 
@@ -138,31 +140,31 @@ let research = ((selector) => {
             .attr('y',top_padding/2)
             .attr('text-anchor','middle')
             .attr('font-family','Avenir')
-            .attr('font',20)
+            .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
 
         svg.append('text')
             .text('Less Hopeless')
             .attr('class','less')
-            .attr('x',70-bottom_padding)
+            .attr('x',y_shift-bottom_padding)
             .attr('y',axis_padding-10)
             .attr('text-anchor','middle')
             .attr('transform','rotate(-90)')
             .attr('font-family','Avenir')
-            .attr('font',20)
+            .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
 
         svg.append('text')
             .text('More Hopeless')
             .attr('class','more')
-            .attr('x',-70-top_padding)
+            .attr('x',-y_shift-top_padding)
             .attr('y',axis_padding-10)
             .attr('text-anchor','middle')
             .attr('transform','rotate(-90)')
             .attr('font-family','Avenir')
-            .attr('font',20)
+            .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
         
@@ -225,7 +227,7 @@ let research = ((selector) => {
     drawLine(12.31,11.54,'#7059E7','koko')
     drawLine(12.48,12.8,'#1B172F','nokoko')
 
-    var ta_x = width-axis_padding-40, ta_y = y_axis(15), ea_y = y_axis(11), line_height = '3%', font_size = 22;
+    var ta_x = width-axis_padding-40, ta_y = y_axis(15), ea_y = y_axis(11), line_height = '3%', font_size = isMobile ? 32 : 22;
 
     var trad_annotation = svg.append('text')
         .attr('class','research_annotation')
@@ -302,7 +304,24 @@ let research = ((selector) => {
         .attr('id','enhance_anno')
         .attr('x',ta_x)
         .attr('dy',line_height)
-        .text('users had a significant decrease in hopelessness.');
+        .text('users had a significant decrease in hopelessness.')
+        .attr('display',isMobile ? 'none' : 1);
+
+    enhance_annotation.append('tspan')
+        .attr('class','research_annotation')
+        .attr('id','enhance_anno')
+        .attr('x',ta_x)
+        .attr('dy',line_height)
+        .text('users had a significant decrease')
+        .attr('display', !(isMobile) ? 'none' : 1);
+
+    enhance_annotation.append('tspan')
+        .attr('class','research_annotation')
+        .attr('id','enhance_anno')
+        .attr('x',ta_x)
+        .attr('dy',line_height)
+        .text('in hopelessness.')
+        .attr('display',!(isMobile) ? 'none' : 1);
 
    var link_text =  enhance_annotation.append('tspan')
         .attr('class','research_annotation')
@@ -310,7 +329,7 @@ let research = ((selector) => {
         .attr('x',ta_x)
         .attr('dy','3.5%')
         .text(`Explore all of Koko's research publications `)
-        .attr('font-size',font_size-2)
+        .attr('font-size',isMobile ? font_size-6 : font_size-2)
         .attr('font-weight', 400)
 
     link_text
@@ -439,7 +458,7 @@ function update(val){
         .transition()
         .duration(4000)
         .style('opacity',1)
-        
+
         d3.select('#nokoko')
         .attr('marker-end',"url(#arrownokoko)")
         .transition()

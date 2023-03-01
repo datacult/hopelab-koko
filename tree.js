@@ -17,6 +17,9 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         // width = data_map.width,
         intervention_type = data_map.intervention_type
 
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+
+
 
     // If id and parentId options are specified, or the path option, use d3.stratify
     // to convert tabular data to a hierarchy; otherwise we assume that the data is
@@ -32,8 +35,8 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
   
     // Compute the layout.
     // console.log(root)
-    const dx = 60;
-    const dy = 175//width / (root.height + padding);
+    const dx = isMobile ? 100 : 60;
+    const dy = isMobile ? 159 : 175//width / (root.height + padding);
     tree().nodeSize([dx, dy])(root);
 
     // console.log(dy)
@@ -78,8 +81,8 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     }
 
     // responsive width & height
-    const svgWidth = 1440 
-    const svgHeight = 850//900 
+    const svgWidth = isMobile ? screen.width*1.8 : 1440 
+    const svgHeight = isMobile ? screen.height*1.6 : 850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
@@ -89,10 +92,11 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
 
     // add SVG
     // d3.select(`${selector} svg`).remove();
+    var view = isMobile ? 10 : -dy * padding / 2
 
     const svg = d3.select('#tree-placeholder')
         .append('svg')
-        .attr("viewBox", `${-dy * padding / 2} ${x0 - dx} ${svgWidth} ${svgHeight}`)
+        .attr("viewBox", `${view} ${x0 - dx} ${svgWidth} ${svgHeight}`)
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
@@ -148,8 +152,9 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .attr("dy", "0.32em")
         .attr('x',r*5/2)
         .attr("text-anchor",'middle')
+        .attr('font-family','Avenir')
         .attr('fill','white')
-        .attr('font-size',16)
+        .attr('font-size',isMobile ? 18 : 16)
         .text(d => d.data.name);
 
     svg.append('line')

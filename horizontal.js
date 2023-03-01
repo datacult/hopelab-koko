@@ -25,8 +25,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }
 
     // responsive width & height
-    const svgWidth = 1440 
-    const svgHeight = 850//900 
+    const svgWidth = isMobile ? screen.width : 1440 
+    const svgHeight = isMobile ? screen.height : 850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
@@ -42,6 +42,98 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+    // const div = d3.select(selector)
+    //             .append('div')
+
+
+        var header_text = `When a platform uses Koko’s detection library, they are able to identify significantly more high-risk content.`
+        var desc_text = 'The detection library is constantly evolving to mirror trends and new types of concerning content.'
+    
+        var nokoko_text = 'Without Koko, some of these high-risk terms will be detected, but ways to evade filters evolve quickly and many are missed. '
+        const text = d3.select(selector)
+            .append('div')
+            .attr('class','force-text')
+            .style('position','absolute')
+            .style('top',isMobile ? '-160px' : 0)
+            .style('display','flex')
+            .style('flex-direction','column')
+            .style('align-items','center')
+            .style('justify-content','center')
+            .style('height','100%')
+            .style('width','100%')
+            .style('opacity',1)
+                // .style('margin','auto')
+    
+    
+        var header = text.append('p')
+            .attr('class','force-headline')
+            .text(header_text)
+            .style('width',isMobile ? '600px': '450px')
+            .style('margin','0')
+            .style('text-align','center')
+            .style('color','#ffffff')
+            .style('font-size',isMobile ? '3rem': '1.33rem')
+            .style('line-height','135%')
+            .style('font-family','Avenir')
+            .style('font-weight','500')
+    
+            text.append('br')
+    
+        var desc = text.append('p')
+            .attr('class','force-desc')
+            .text(desc_text)
+            .style('width',isMobile ? '600px': '450px')
+            .style('margin','0')
+            .style('text-align','center')
+            .style('color','#ffffff')
+            .style('font-size',isMobile ? '2.6rem': '1.33rem')
+            .style('line-height','135%')
+            .style('font-family','Avenir')
+    
+    
+            var koko_int_text = `When redirected to Koko, the user is greeted with a variety of support options in an accessible way. `
+            
+            var nokoko_int_text = 'In the case where keywords are detected, most platforms redirect to a major crisis line.'
+    
+            const txt = d3.select(selector)
+                .append('div')
+                .attr('class','int-text')
+                .style('position','absolute')
+                .style('top',0)
+                .style('display','flex')
+                .style('flex-direction','column')
+                .style('align-items','center')
+                .style('justify-content','center')
+                .style('height','100%')
+                .style('width','100%')
+                .style('opacity',0)
+        
+        
+            var int_text = txt.append('p')
+                .attr('class','force-headline')
+                .text(koko_int_text)
+                .style('width',isMobile ? '600px': '450px')
+                // .style('margin','auto')
+                .style('text-align','center')
+                .style('color','#ffffff')
+                .style('font-size',isMobile ? '2.8rem': '1.15rem')
+                .style('line-height','135%')
+                .style('font-family','Avenir')
+                .style('font-weight','500')
+    
+            var img_div = txt.append('div')
+                .attr('class','bakcground')
+                .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
+                .style('background','#22194D')
+                // .style('margin','5vw auto')
+                .style('z-index',100)
+    
+            var int_image = img_div.append('img')
+                .attr('class','int-img')
+                .attr('src','koko.gif')
+                .style('width',isMobile ? '60vw': '30vw')
+
 
 
     ////////////////////////////////////
@@ -150,17 +242,18 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .on("end", dragended)
     }
 
-    var center_y =  height / 2
+    var center_y =  isMobile ? height / 2.5 : height/2, width_factor = isMobile ? 2.5 : 2
     var simulation = d3.forceSimulation(nodes)
         .force("charge", d3.forceManyBody().strength(1))
-        .force("radial", d3.forceRadial(d => Math.floor(Math.random() * 320) + 300, width / 2, center_y))
+        .force("radial", d3.forceRadial(d => isMobile ? 200 : Math.floor(Math.random() * 320) + 300, width / width_factor, center_y))
         .force("collide", d3.forceCollide().radius(d => d.r))
-        .force("center", d3.forceCenter(width / 2, center_y))
+        .force("center", d3.forceCenter(width / width_factor, center_y))
         .force("bouding-circle", () => {
+            var min = isMobile ? 540 : 340, max = isMobile ? 550 : 350
             nodes.forEach(node => {
-              if (node.y < center_y - 350 || node.y > center_y + 340) {
+              if (node.y < center_y - max || node.y > center_y + min) {
                 // node.x = Math.floor(Math.random() * 270) + 240//... // new x position
-                node.y = Math.floor(Math.random() * (center_y+340)) + (center_y-350)//... // new y position
+                node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
               }
             })
           })
@@ -171,7 +264,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     //////////// add to DOM ////////////
     ////////////////////////////////////  
 
-    var rect_height = 25, rect_width = 75, rect_width_tree = 70, rect_height_tree = 50;
+    var rect_height = 25, rect_width = 75, rect_width_tree = isMobile ? 70 : 70, rect_height_tree = isMobile ? 50 :50;
+    // , rect_width_tree = isMobile ? 35 : 70, rect_height_tree = isMobile ? 30 :50;
 
     const node = svg.append("g")
             .selectAll(".forceword")
@@ -211,7 +305,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('stroke',d => d.opacity == .45 ? '#ffffff' : '#ffffff00')
             .style('stroke-width','1.5px');
 
-    var text_x = rect_width/2, text_y = 18
+    var text_x = rect_width/2, text_y = 16.5
 
     simulation.on("tick", () => {
 
@@ -238,13 +332,13 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 350 : height*243/900
 // var grid_layout = []
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
 
     // var start_x = width/2-rect_width_tree*columns/2, start_y = height/2-rect_height_tree*rows/2;
-    var start_x = width*135/1440, start_y = height*243/900//243
+    //243
 
     grid_layout[value-1].x = start_x+rect_width_tree*(value-(Math.ceil(value/columns)-1)*columns)-rect_width_tree
     grid_layout[value-1].y = start_y+rect_height_tree*Math.ceil(value/columns)-rect_height_tree
@@ -257,7 +351,7 @@ function calcGrid(value) {
     /////////// treemap setup //////////
     ////////////////////////////////////
 
-    var img_x = width*135/1440+(10*rect_width_tree), img_y = height*243/900+(6*rect_height_tree)+12
+    var img_x = start_x+(10*rect_width_tree), img_y = isMobile ? start_y+(6*rect_height_tree/2)+12 : start_y+(6*rect_height_tree)+12
     var img_x1 = width+50, img_x2 = img_x+20, img_x3 = img_x2-(width*1.1);
 
     const tr_bracket = svg
@@ -268,7 +362,21 @@ function calcGrid(value) {
         .attr('stroke-width',3)
         .attr('stroke-linecap','round')
         .attr('fill','none')
-        .attr('transform','translate('+img_x1+','+img_y+')')
+        .attr('transform','translate('+img_x2+','+img_y+')')
+        .attr('opacity',0)
+        .attr('display',isMobile ? 'none' : 1)
+
+    const tr_bracket_mobile = svg
+        .append('path')
+        .attr('class','tree-bracket')
+        .attr('d','M354 1.99993L354 24.9524C354 31.0275 349.075 35.9524 343 35.9524L13 35.9524C6.92487 35.9524 2 31.0275 2.00001 24.9524L2.00001 1.9999')
+        .attr('stroke','#B5B5B5')
+        .attr('stroke-width',3)
+        .attr('stroke-linecap','round')
+        .attr('fill','none')
+        .attr('transform','translate('+(start_x-7)+','+(img_y-80)+')')
+        .attr('opacity',0)
+        .attr('display',isMobile ? 1 : 'none')
 
     const tr_bracket_line = svg
         .append('path')
@@ -278,30 +386,32 @@ function calcGrid(value) {
         .attr('stroke-width',3)
         .attr('stroke-linecap','round')
         .attr('fill','none')
-        .attr('transform','translate('+img_x1+','+img_y+')')
+        .attr('opacity',0)
+        .attr('transform', isMobile ? 'translate('+(265)+','+(432)+') rotate(90)' : 'translate('+img_x2+','+img_y+')')
     
     
-    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = img_x2+shift, ba_x3 = img_x3+shift, ba_y = img_y+35, line_height = '3%', font_size = 20;
+    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 530 : img_y+35, line_height = '3%', font_size = 20;
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('y',ba_y)
+        .attr('text-anchor',isMobile ? 'middle' : 'start')
         .attr('fill','white')
         .attr('font-size',font_size)
-        .attr('opacity',1);
+        .attr('opacity',0);
 
     base_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_koko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
         .text(`Koko's detection system catches`);
 
     base_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_koko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
         .text('20-40% ')
         .attr('font-weight', 700)
@@ -312,20 +422,20 @@ function calcGrid(value) {
     base_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_koko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
         .text('keywords than traditional filters,');
 
     base_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_koko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
         .text('reaching more users.');
 
     var nokoko_annotation = svg.append('text')
         .attr('class','annotation')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('y',ba_y)
         .attr('fill','white')
         .attr('font-size',font_size)
@@ -334,41 +444,48 @@ function calcGrid(value) {
     nokoko_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_nokoko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
-        .text(`Koko has audited many of the largest`);
+        .text(`Koko has audited many of the largest`)
+        .attr('display','none');
 
     nokoko_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_nokoko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
-        .text('Internet platforms in the world.'); 
+        .text('Internet platforms in the world.')
+        .attr('display','none');
         
     nokoko_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_nokoko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy','1%')
-        .text(' '); 
+        .text(' ')
+        .attr('display','none');
 
     nokoko_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_nokoko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
         .text('20-40% ')
+        .attr('display','none')
         .attr('font-weight', 700)
         .append('tspan')
+        .attr('id','anno_nokoko')
         .text(`of Koko's keywords`)
-        .attr('font-weight', 400);
+        .attr('font-weight', 400)
+        .attr('display','none');
 
     nokoko_annotation.append('tspan')
         .attr('class','annotation')
         .attr('id','anno_nokoko')
-        .attr('x',ba_x1)
+        .attr('x',ba_x2)
         .attr('dy',line_height)
-        .text(`aren't detected by these platforms.`);
+        .text(`aren't detected by these platforms.`)
+        .attr('display','none');
 
     svg.append('line')
         .attr('class','int_line')
@@ -379,6 +496,7 @@ function calcGrid(value) {
         .attr('x2',width+50)
         .attr('y1',height/2)
         .attr('y2',height/2)
+        .attr("display",isMobile ? 'none': 1)
 
 var force_opacity = d3.scaleLinear()
     .domain([.15,1])
@@ -436,39 +554,47 @@ var text_opacity = d3.scaleLinear()
     .domain([.05,.25])
     .range([1,1])
 
-var bracket_pos = d3.scaleLinear()
-.domain([0,1])
-.range([img_x1,img_x2])
+var bracket_op = d3.scaleLinear()
+.domain([0,.75])
+.range([0,1])
 
-var bracket_pos2 = d3.scaleLinear()
+var bracket_op2 = d3.scaleLinear()
 .domain([0,.5])
-.range([img_x2,img_x3])
-
-var text_pos = d3.scaleLinear()
-.domain([0,1])
-.range([ba_x1,ba_x2])
-
-var text_pos2 = d3.scaleLinear()
-.domain([0,.5])
-.range([ba_x2,ba_x3])
+.range([1,0])
 
 var line_pos = d3.scaleLinear()
 .domain([0,.5,1])
 .range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5])
 
-console.log((width/5)+width*2/5-width*2/5)
+var mobile_font = d3.scaleLinear()
+.domain([0,.95])
+.range([1,.5])
+
+var div_text_in = d3.scaleLinear()
+        .domain([.75,1])
+        .range([0,1])
+
+var div_text_out = d3.scaleLinear()
+        .domain([0,.25])
+        .range([1,0])
 
 function updatePosition(percent) {
 //    d3.selectAll('.force-text')
 //    .attr('x',position(percent)) 
 
     tr_bracket
-    .attr('transform','translate('+bracket_pos(percent)+','+img_y+')')
+    .attr('opacity',bracket_op(percent))
+
+    tr_bracket_mobile
+    .attr('opacity',bracket_op(percent))
 
     tr_bracket_line
-    .attr('transform','translate('+bracket_pos(percent)+','+img_y+')')
+    .attr('opacity',bracket_op(percent))
 
-    d3.selectAll('.annotation').attr('x',text_pos(percent))
+    d3.selectAll('.annotation')
+    .attr('opacity',bracket_op(percent))
+
+    text.style('opacity',div_text_out(percent))
 
    node_data.forEach(d => {
     calcGrid(d.id)
@@ -481,9 +607,13 @@ function updatePosition(percent) {
     .domain([0,.95])
     .range([grid_layout[d.id-1].sim_y,grid_layout[d.id-1].y])
 
+    d3.select('#groupword'+d.id)
+    .attr('transform',isMobile ? 'scale('+mobile_font(percent)+')' : '')
+
     d3.select('#textword'+d.id)
     .attr('x',grid_position_x(percent)+text_position_x(percent))
     .attr('y',grid_position_y(percent)+text_position_y(percent))
+    // .attr('transform',isMobile ? 'scale('+mobile_font(percent)+')' : '')
     .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
 
     d3.select('#word'+d.id)
@@ -499,29 +629,25 @@ function updatePosition(percent) {
 
 function updatePosition2(percent){
     tr_bracket
-    .attr('transform','translate('+bracket_pos2(percent)+','+img_y+')')
+    .attr('opacity',bracket_op2(percent))
+
+    tr_bracket_mobile
+    .attr('opacity',bracket_op2(percent))
 
     tr_bracket_line
-    .attr('transform','translate('+bracket_pos2(percent)+','+img_y+')')
+    .attr('opacity',bracket_op2(percent))
 
-    d3.selectAll('.annotation').attr('x',text_pos2(percent))
+    d3.selectAll('.annotation')
+    .attr('opacity',bracket_op2(percent))
+
+    txt.style('opacity',div_text_in(percent))
+
     d3.select('.int_line').attr('x1',line_pos(percent))
     // console.log(percent)
 
     node_data.forEach(d => {
 
-        if (d.group == 1) {
-
-            var leave_position_x = d3.scaleLinear()
-            .domain([0,.5])
-            .range([grid_layout[d.id-1].x,grid_layout[d.id-1].x-(width*1.1)])
-    
-            d3.select('#word'+d.id)
-                .attr('x',leave_position_x(percent))
-
-            d3.select('#textword'+d.id)
-            .attr('x',leave_position_x(percent)+rect_width_tree/2)
-        } else {
+        if (d.group !== 1 && !(isMobile)) {
             var position_x = d3.scaleLinear()
             .domain([0,.5,1])
             .range([grid_layout[d.id-1].x,d.px,d.px-width*2/5])
@@ -540,6 +666,17 @@ function updatePosition2(percent){
                 .attr('width',size_width2(percent))
                 .attr('height',size_height2(percent))
                 .style('opacity',d.class == 'caught3' ? text_opacity(percent) : 1)
+        } else {
+
+            var leave_position_x = d3.scaleLinear()
+            .domain([0,.5])
+            .range([grid_layout[d.id-1].x,grid_layout[d.id-1].x-(width*1.1)])
+    
+            d3.select('#word'+d.id)
+                .attr('x',leave_position_x(percent))
+
+            d3.select('#textword'+d.id)
+            .attr('x',leave_position_x(percent)+rect_width_tree/2)
         }
     })
 }
@@ -587,6 +724,11 @@ scroll.on('progress', function (index, progress) {
 
 function block_update(val) {
     if (val == 'koko'){
+        header.text(header_text)
+        desc.text(desc_text)
+        int_text.text(koko_int_text)
+        int_image.attr('src','koko.gif')
+        img_div.style('background','#22194D')
 
         low_opacity = d3.scaleLinear()
         .domain([0,1])
@@ -596,11 +738,11 @@ function block_update(val) {
         .domain([0,1])
         .range([.45,.85])
 
-        base_annotation
-        .attr('opacity',1)
+        d3.selectAll('#anno_koko')
+        .attr('display',1)
 
-        nokoko_annotation
-        .attr('opacity',0)
+        d3.selectAll('#anno_nokoko')
+        .attr('display','none')
 
 
         d3.selectAll('.no_low').style('stroke-opacity',1).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
@@ -609,6 +751,11 @@ function block_update(val) {
           
         // console.log()
     } else {
+        header.text(nokoko_text)
+        desc.text('')
+        int_text.text(nokoko_int_text)
+        int_image.attr('src','Message.png')
+        img_div.style('background','#000000')
 
         low_opacity = d3.scaleLinear()
         .domain([0,1])
@@ -622,11 +769,11 @@ function block_update(val) {
         .domain([.25,.5])
         .range([1,0])
 
-        base_annotation
-        .attr('opacity',0)
+        d3.selectAll('#anno_koko')
+        .attr('display','none')
 
-        nokoko_annotation
-        .attr('opacity',1)
+        d3.selectAll('#anno_nokoko')
+        .attr('display',1)
 
         d3.selectAll('.no_low').style('stroke-opacity',0).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
         d3.selectAll('.no_high').style('stroke-opacity',0).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
