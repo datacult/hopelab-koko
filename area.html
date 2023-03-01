@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+
+    <style>
+        body {
+            font-family: Avenir;
+        }
+
+        .h2 {
+            font-family: 'Avenir Next';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 1.5em;
+            line-height: 130%;
+        }
+
+        svg text{
+            font-family: 'Avenir Next';
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div id="scroll">
+        <div id="area"></div>
+    </div>
+</body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="area.js"></script>
+<script>
+    async function init() {
+
+        let data = await d3.csv('impact.csv', d3.autoType)
+
+        let mapping = { x: 'Date', y: 'Users' }
+
+        let dot_vis = area("#area", data, mapping)
+
+    }
+    init()
+
+</script>
+
+</html>
