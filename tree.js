@@ -81,7 +81,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? screen.width*1.8 : 1440 
+    const svgWidth = isMobile ? screen.width*1.8 : 864 
     const svgHeight = isMobile ? screen.height*1.6 : 850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
@@ -96,6 +96,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
 
     const svg = d3.select('#tree-placeholder')
         .append('svg')
+        // .attr('width','60vw')
         .attr("viewBox", `${view} ${x0 - dx} ${svgWidth} ${svgHeight}`)
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
