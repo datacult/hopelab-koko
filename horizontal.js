@@ -131,7 +131,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     
             var int_image = img_div.append('img')
                 .attr('class','int-img')
-                .attr('src','koko.gif')
+                .attr('src','https://datacult.github.io/hopelab-koko/koko.gif')
                 .style('width',isMobile ? '60vw': '30vw')
 
 
@@ -727,7 +727,7 @@ function block_update(val) {
         header.text(header_text)
         desc.text(desc_text)
         int_text.text(koko_int_text)
-        int_image.attr('src','koko.gif')
+        int_image.attr('src','https://datacult.github.io/hopelab-koko/koko.gif')
         img_div.style('background','#22194D')
 
         low_opacity = d3.scaleLinear()
@@ -754,7 +754,7 @@ function block_update(val) {
         header.text(nokoko_text)
         desc.text('')
         int_text.text(nokoko_int_text)
-        int_image.attr('src','Message.png')
+        int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
         img_div.style('background','#000000')
 
         low_opacity = d3.scaleLinear()

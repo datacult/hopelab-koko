@@ -67,6 +67,8 @@ function scroller() {
       var startPos;
       sections.each(function (d, i) {
         var top = this.getBoundingClientRect().top;
+        console.log(this.getBoundingClientRect())
+        console.log(window)
         if (i === 0) {
           startPos = top;
         }
