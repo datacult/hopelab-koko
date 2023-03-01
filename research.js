@@ -27,7 +27,6 @@ let research = ((selector) => {
     // responsive width & height
     const svgWidth = 720 
     const svgHeight = isMobile ? screen.height*1.6 : 700//900 
-    console.log(svgHeight)
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
