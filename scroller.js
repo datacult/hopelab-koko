@@ -69,11 +69,13 @@ function scroller() {
         console.log(this)
         console.log(window)
         var top = this.getBoundingClientRect().top;
+        console.log(top)
         if (i === 0) {
           startPos = top;
         }
         sectionPositions.push(top - startPos);
       });
+      console.log(container.node())
       containerStart = container.node().getBoundingClientRect().top + window.pageYOffset;
     }
   
