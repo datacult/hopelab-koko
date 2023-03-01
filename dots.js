@@ -111,8 +111,6 @@ function socialPerc(val){
 }
 
 socialPerc(62)
-console.log(cols)
-console.log(num_row-extra)
 
 function calcGrid(value) {
 
@@ -173,7 +171,6 @@ const dot = svg
 function randomSelect(arr,val,val2,fill,opac,fill2,opac2) {
     var perc = Math.round(num_dots*val/100)
     var perc2 = Math.round(num_dots*val2/100)
-    // console.log(num_dots)
     let random = arr.sort(() => .5 - Math.random()).splice(0,perc)
     let random_subset = random.sort(() => .5 - Math.random()).splice(0,perc2)
     random.forEach(d => {
