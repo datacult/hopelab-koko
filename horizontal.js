@@ -107,7 +107,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('justify-content','center')
                 .style('height','100%')
                 .style('width','100%')
-                .style('opacity',0)
         
         
             var int_text = txt.append('p')
@@ -121,6 +120,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('line-height','135%')
                 .style('font-family','Avenir')
                 .style('font-weight','500')
+                .style('opacity',0)
     
             var img_div = txt.append('div')
                 .attr('class','bakcground')
@@ -128,11 +128,13 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('background','#22194D')
                 // .style('margin','5vw auto')
                 .style('z-index',100)
+                .style('opacity',0)
     
             var int_image = img_div.append('img')
                 .attr('class','int-img')
                 .attr('src','https://datacult.github.io/hopelab-koko/koko.gif')
                 .style('width',isMobile ? '60vw': '30vw')
+                .style('opacity',0)
 
 
 
@@ -274,6 +276,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .attr("class", "forceword")
             .attr("class", d=>'group'+d.class)
             .attr('id',d=>'group'+'word'+d.id)
+            .style("opacity",d => d.force == "no" ? 0 : 1)
             .call(drag(simulation));
 
     const node_text = node
@@ -287,8 +290,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('text-anchor','middle')
             .style("fill","white")
             .style('font-size',16)
-            .style('filter','blur(3px)')
-            .style("opacity",d => d.force == "no" ? 0 : 1);
+            .style('filter','blur(3px)');
 
     const node_rect = node
             .selectAll(".forceword_rect")
@@ -301,7 +303,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .attr("width", rect_width)
             .style("fill","white")
             .style("fill-opacity",d => d.opacity)
-            .style("opacity",d => d.force == "no" ? 0 : 1)
+            // .style("opacity",d => d.force == "no" ? 0 : 1)
             .style('stroke','#ffffff')
             .style('stroke-opacity',d => d.opacity == 0.45 ? 1 : d.opacity)
             .style('stroke-width','2px');
@@ -333,7 +335,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 350 : height*180/900
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 350 : height*170/900
 // var grid_layout = []
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
@@ -495,8 +497,8 @@ function calcGrid(value) {
         .attr('stroke-linecap','round')
         .attr('x1',width+50)
         .attr('x2',width+50)
-        .attr('y1',height/2)
-        .attr('y2',height/2)
+        .attr('y1',height/2+7.5)
+        .attr('y2',height/2+7.5)
         .attr("display",isMobile ? 'none': 1)
 
 var force_opacity = d3.scaleLinear()
@@ -509,7 +511,15 @@ var missed_opacity = d3.scaleLinear()
 
 var missed_stroke = d3.scaleLinear()
     .domain([0,1])
-    .range(["#ffffff00","#ffffff"])
+    .range([.2,1])
+
+var low_stroke = d3.scaleLinear()
+.domain([0,1])
+.range([1,1])
+
+var high_stroke = d3.scaleLinear()
+.domain([0,1])
+.range([1,1])
 
 var low_opacity = d3.scaleLinear()
     .domain([0,1])
@@ -575,6 +585,10 @@ var div_text_in = d3.scaleLinear()
         .domain([1.75,2])
         .range([0,1])
 
+var div_bg_in = d3.scaleLinear()
+        .domain([1.75,1.85,1.86])
+        .range([0,0,1])
+
 var div_text_out = d3.scaleLinear()
         .domain([0,.25])
         .range([1,0])
@@ -610,22 +624,22 @@ function updatePosition(percent) {
 
     d3.select('#groupword'+d.id)
     .attr('transform',isMobile ? 'scale('+mobile_font(percent)+')' : '')
+    .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
 
     d3.select('#textword'+d.id)
     .attr('x',grid_position_x(percent)+text_position_x(percent))
     .attr('y',grid_position_y(percent)+text_position_y(percent))
     // .attr('transform',isMobile ? 'scale('+mobile_font(percent)+')' : '')
-    .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
 
     d3.select('#word'+d.id)
     .attr('x',grid_position_x(percent))
     .attr('y',grid_position_y(percent))
     .attr('width',size_width(percent))
     .attr('height',size_height(percent))
-    .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
-    .style("stroke",d.class == "missed" ? missed_stroke(percent) : '#ffffff')
+    // .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
+    // .style("stroke",d.class == "missed" ? missed_stroke(percent) : '#ffffff')
     .style("fill-opacity",d.class == "missed" ? missed_opacity(percent) : (d.class == "no_low" ? low_opacity(percent) : (d.class == "no_high" ? high_opacity(percent) : d.opacity)))
-    // .style("stroke-opacity",d.class == "missed" ? missed_opacity(percent) : (d.class == "no_low" ? low_opacity(percent) : (d.class == "no_high" ? high_opacity(percent) : d.opacity)))
+    .style("stroke-opacity",d.class == "missed" ? missed_stroke(percent) : (d.class == "no_low" ? low_stroke(percent) : (d.class == "no_high" ? high_stroke(percent) : 1)))
 })
 }
 
@@ -642,7 +656,9 @@ function updatePosition2(percent){
     d3.selectAll('.annotation')
     .attr('opacity',bracket_op2(percent))
 
-    txt.style('opacity',div_text_in(percent))
+    int_text.style('opacity',div_text_in(percent))
+    int_image.style('opacity',div_text_in(percent))
+    img_div.style('opacity',div_bg_in(percent))
 
     d3.select('.int_line').attr('x1',line_pos(percent))
     // console.log(percent)
@@ -658,6 +674,9 @@ function updatePosition2(percent){
             .domain([1,1.5,2])
             .range([grid_layout[d.id-1].y,d.py,d.py])
 
+            d3.select('#groupword'+d.id)
+            .style('opacity',d.class == 'caught3' ? text_opacity(percent) : 1)
+
             d3.select('#textword'+d.id)
             .attr('x',position_x(percent)+text_width2(percent))
             .attr('y',position_y(percent)+text_height2(percent))
@@ -667,7 +686,6 @@ function updatePosition2(percent){
                 .attr('y',position_y(percent))
                 .attr('width',size_width2(percent))
                 .attr('height',size_height2(percent))
-                .style('opacity',d.class == 'caught3' ? text_opacity(percent) : 1)
         } else {
 
             var leave_position_x = d3.scaleLinear()
@@ -740,6 +758,14 @@ function block_update(val) {
         .domain([0,1])
         .range([.45,.85])
 
+        var low_stroke = d3.scaleLinear()
+        .domain([0,1])
+        .range([1,1])
+        
+        var high_stroke = d3.scaleLinear()
+        .domain([0,1])
+        .range([1,1])
+
         d3.selectAll('#anno_koko')
         .attr('display',1)
 
@@ -747,9 +773,9 @@ function block_update(val) {
         .attr('display','none')
 
 
-        d3.selectAll('.no_low').style('stroke-opacity',1).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
-        d3.selectAll('.no_high').style('stroke-opacity',1).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
-        d3.selectAll('.caught3').style('opacity',1)
+        d3.selectAll('.no_low').style('stroke-opacity',ind == 2 ? low_stroke(prog) : (ind > 2 ? low_stroke(1) : low_stroke(0))).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
+        d3.selectAll('.no_high').style('stroke-opacity',ind == 2 ? high_stroke(prog) : (ind > 2 ? high_stroke(1) : high_stroke(0))).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
+        d3.selectAll('.groupcaught3').style('opacity',1)
           
         // console.log()
     } else {
@@ -767,6 +793,14 @@ function block_update(val) {
         .domain([0,1])
         .range([.2,.2])
 
+        var low_stroke = d3.scaleLinear()
+        .domain([0,1])
+        .range([.2,.3])
+        
+        var high_stroke = d3.scaleLinear()
+        .domain([0,1])
+        .range([.2,.2])
+
         text_opacity = d3.scaleLinear()
         .domain([.25,.5])
         .range([1,0])
@@ -777,9 +811,9 @@ function block_update(val) {
         d3.selectAll('#anno_nokoko')
         .attr('display',1)
 
-        d3.selectAll('.no_low').style('stroke-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0))).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
-        d3.selectAll('.no_high').style('stroke-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0))).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
-        d3.selectAll('.caught3').style('opacity',ind == 3 ? text_opacity(prog) : 1)
+        d3.selectAll('.no_low').style('stroke-opacity',ind == 2 ? low_stroke(prog) : (ind > 2 ? low_stroke(1) : low_stroke(0))).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
+        d3.selectAll('.no_high').style('stroke-opacity',ind == 2 ? high_stroke(prog) : (ind > 2 ? high_stroke(1) : high_stroke(0))).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
+        d3.selectAll('.groupcaught3').style('opacity',ind == 2 && prog >=1 ? text_opacity(prog) : 1)
     }
   }
 
