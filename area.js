@@ -151,7 +151,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     const zeroArea = d3.area()
     .x(function(d) { return x(d[mapping.x]); })
     .y0(height)
-    .y1(function() { return 0; });
+    .y1(function() { return height; });
 
     const area = d3.area()
     .x(d => x(d[mapping.x]))
