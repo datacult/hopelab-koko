@@ -48,7 +48,7 @@ let dots = ((selector = '#dot-placeholder') => {
     let options = {
         root: null,
         rootMargin: "0px",
-        threshold: [.75]
+        threshold: [.5]
       };
         
         const distress = document.querySelector('#distress');
@@ -56,7 +56,7 @@ let dots = ((selector = '#dot-placeholder') => {
         const distressObserver = new IntersectionObserver(handleDistress, options);
     
         function handleDistress(entry, observer) {
-            if (entry[0].intersectionRatio > .75) {
+            if (entry[0].intersectionRatio > .5) {
                 update(1)
             }
         };
@@ -68,7 +68,7 @@ let dots = ((selector = '#dot-placeholder') => {
         const suicideObserver = new IntersectionObserver(handleSuicide, options);
     
         function handleSuicide(entry, observer) {
-            if (entry[0].intersectionRatio > .75) {
+            if (entry[0].intersectionRatio > .5) {
                 update(2)
             }
         };
@@ -80,7 +80,7 @@ let dots = ((selector = '#dot-placeholder') => {
         const socialObserver = new IntersectionObserver(handleSocial, options);
     
         function handleSocial(entry, observer) {
-            if (entry[0].intersectionRatio > .75) {
+            if (entry[0].intersectionRatio > .5) {
                 update(3)
             }
         };
