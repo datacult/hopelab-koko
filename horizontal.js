@@ -249,7 +249,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
         .force("collide", d3.forceCollide().radius(d => d.r))
         .force("center", d3.forceCenter(width / width_factor, center_y))
         .force("bouding-circle", () => {
-            var min = isMobile ? 540 : 340, max = isMobile ? 550 : 350
+            var min = isMobile ? 540 : 290, max = isMobile ? 550 : 300
             nodes.forEach(node => {
               if (node.y < center_y - max || node.y > center_y + min) {
                 // node.x = Math.floor(Math.random() * 270) + 240//... // new x position
@@ -302,8 +302,9 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style("fill","white")
             .style("fill-opacity",d => d.opacity)
             .style("opacity",d => d.force == "no" ? 0 : 1)
-            .style('stroke',d => d.opacity == .45 ? '#ffffff' : '#ffffff00')
-            .style('stroke-width','1.5px');
+            .style('stroke','#ffffff')
+            .style('stroke-opacity',d => d.opacity == 0.45 ? 1 : d.opacity)
+            .style('stroke-width','2px');
 
     var text_x = rect_width/2, text_y = 16.5
 
@@ -332,7 +333,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 350 : height*243/900
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 350 : height*180/900
 // var grid_layout = []
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
@@ -390,7 +391,7 @@ function calcGrid(value) {
         .attr('transform', isMobile ? 'translate('+(265)+','+(432)+') rotate(90)' : 'translate('+img_x2+','+img_y+')')
     
     
-    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 530 : img_y+35, line_height = '3%', font_size = 20;
+    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 530 : img_y+45, line_height = '3%', font_size = 20;
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
@@ -535,19 +536,19 @@ var text_position_y = d3.scaleLinear()
     .range([(rect_height/2+4),(rect_height_tree/2+4)])
 
 var size_width2 = d3.scaleLinear()
-    .domain([0,.5,1])
+    .domain([1,1.5,2])
     .range([rect_width_tree,rect_width,rect_width])
 
 var size_height2 = d3.scaleLinear()
-    .domain([0,.5,1])
+    .domain([1,1.5,2])
     .range([rect_height_tree,rect_height,rect_height])
 
 var text_width2 = d3.scaleLinear()
-        .domain([0,.5,1])
+        .domain([1,1.5,2])
         .range([rect_width_tree/2,rect_width/2,rect_width/2])
     
 var text_height2 = d3.scaleLinear()
-        .domain([0,.5,1])
+        .domain([1,1.5,2])
         .range([rect_height_tree/2+4,rect_height/2+4,rect_height/2+4])
 
 var text_opacity = d3.scaleLinear()
@@ -559,11 +560,11 @@ var bracket_op = d3.scaleLinear()
 .range([0,1])
 
 var bracket_op2 = d3.scaleLinear()
-.domain([0,.5])
+.domain([1,1.5])
 .range([1,0])
 
 var line_pos = d3.scaleLinear()
-.domain([0,.5,1])
+.domain([1,1.5,2])
 .range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5])
 
 var mobile_font = d3.scaleLinear()
@@ -571,7 +572,7 @@ var mobile_font = d3.scaleLinear()
 .range([1,.5])
 
 var div_text_in = d3.scaleLinear()
-        .domain([.75,1])
+        .domain([1.75,2])
         .range([0,1])
 
 var div_text_out = d3.scaleLinear()
@@ -623,8 +624,9 @@ function updatePosition(percent) {
     .attr('height',size_height(percent))
     .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
     .style("stroke",d.class == "missed" ? missed_stroke(percent) : '#ffffff')
-    .style("fill-opacity",d.class == "missed" ? missed_opacity(percent) : ('fill-opacity',d.class == "no_low" ? low_opacity(percent) : ('fill-opacity',d.class == "no_high" ? high_opacity(percent) : d.opacity)))
-   })
+    .style("fill-opacity",d.class == "missed" ? missed_opacity(percent) : (d.class == "no_low" ? low_opacity(percent) : (d.class == "no_high" ? high_opacity(percent) : d.opacity)))
+    // .style("stroke-opacity",d.class == "missed" ? missed_opacity(percent) : (d.class == "no_low" ? low_opacity(percent) : (d.class == "no_high" ? high_opacity(percent) : d.opacity)))
+})
 }
 
 function updatePosition2(percent){
@@ -649,11 +651,11 @@ function updatePosition2(percent){
 
         if (d.group !== 1 && !(isMobile)) {
             var position_x = d3.scaleLinear()
-            .domain([0,.5,1])
+            .domain([1,1.5,2])
             .range([grid_layout[d.id-1].x,d.px,d.px-width*2/5])
 
             var position_y = d3.scaleLinear()
-            .domain([0,.5,1])
+            .domain([1,1.5,2])
             .range([grid_layout[d.id-1].y,d.py,d.py])
 
             d3.select('#textword'+d.id)
@@ -669,7 +671,7 @@ function updatePosition2(percent){
         } else {
 
             var leave_position_x = d3.scaleLinear()
-            .domain([0,.5])
+            .domain([1,1.5])
             .range([grid_layout[d.id-1].x,grid_layout[d.id-1].x-(width*1.1)])
     
             d3.select('#word'+d.id)
@@ -714,7 +716,7 @@ console.log(progress)
     } else if (index == 2 && progress <= 0){
         updatePosition(0)
     // } else if (index == 3 && progress >= 0 && progress <= .5) {
-    } else if (index == 2 && progress >= 1) {
+    } else if (index == 2 && progress >= 1) { 
         updatePosition2(progress)
     }
     // } else if (index == 3 && progress > .5){
@@ -775,8 +777,8 @@ function block_update(val) {
         d3.selectAll('#anno_nokoko')
         .attr('display',1)
 
-        d3.selectAll('.no_low').style('stroke-opacity',0).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
-        d3.selectAll('.no_high').style('stroke-opacity',0).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
+        d3.selectAll('.no_low').style('stroke-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0))).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
+        d3.selectAll('.no_high').style('stroke-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0))).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
         d3.selectAll('.caught3').style('opacity',ind == 3 ? text_opacity(prog) : 1)
     }
   }
