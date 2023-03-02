@@ -26,7 +26,7 @@ let dots = ((selector = '#dot-placeholder') => {
 
     // responsive width & height
     const svgWidth = isMobile ? screen.width*1.5 : 1440 
-    const svgHeight = isMobile ? screen.height*1.5 : 850//900 
+    const svgHeight = isMobile ? screen.height*1.5 : 810//850//900 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
