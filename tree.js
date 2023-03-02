@@ -82,7 +82,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
 
     // responsive width & height
     const svgWidth = isMobile ? screen.width*1.8 : 864 
-    const svgHeight = isMobile ? screen.height*1.6 : 850//900 
+    const svgHeight = isMobile ? screen.height*1.6 : 630//850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
