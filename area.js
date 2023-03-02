@@ -45,7 +45,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         let options = {
             root: null,
             rootMargin: "0px",
-            threshold: [.75]
+            threshold: [.5]
           };
     
             const scrollarea = document.querySelector('#area');
@@ -53,7 +53,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
             const scrollareaObserver = new IntersectionObserver(handleScrollarea, options);
         
             function handleScrollarea(entry, observer) {
-                if (entry[0].intersectionRatio > .75) {
+                if (entry[0].intersectionRatio > .5) {
                     update()
                 }
             };
