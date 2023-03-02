@@ -197,9 +197,9 @@ if (view == 0){
   function tree_update(val) {
     if (val == 'koko'){
         d3.select('#call').attr('transform',og_position_call)
-        d3.select('#call_path').attr('d','M350,-255C437.5,-255,437.5,-315,525,-315')
+        d3.select('#call_path').attr('d','M350,-212.5C437.5,-212.5,437.5,-262.5,525,-262.5')
         d3.select('#text').attr('transform',og_position_text)
-        d3.select('#text_path').attr('d','M350,-255C437.5,-255,437.5,-255,525,-255')
+        d3.select('#text_path').attr('d','M350,-212.5C437.5,-212.5,437.5,-212.5,525,-212.5')
         d3.selectAll('.node-group0').attr('opacity',1)
         d3.selectAll('.link_group0').attr('opacity',1)
         koko_positions.forEach(el => {
