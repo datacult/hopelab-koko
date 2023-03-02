@@ -783,7 +783,7 @@ function block_update(val) {
         desc.text('')
         int_text.text(nokoko_int_text)
         int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
-        img_div.style('background','#000000')
+        img_div.style('background','#1B172F')
 
         low_opacity = d3.scaleLinear()
         .domain([0,1])

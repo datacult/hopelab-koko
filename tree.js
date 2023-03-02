@@ -132,7 +132,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
       .attr('opacity',1)
       .attr("transform", d => `translate(${d.y-r*0.5},${d.x})`);
 
-    node.append('rect')
+    var bg_rect = node.append('rect')
     .attr("opacity", d => d.depth == 2 ? 0 : 1)
     .attr('fill','#22194D')
     .attr("height", r*1.25)
@@ -202,6 +202,7 @@ if (view == 0){
         d3.select('#text_path').attr('d','M350,-212.5C437.5,-212.5,437.5,-212.5,525,-212.5')
         d3.selectAll('.node-group0').attr('opacity',1)
         d3.selectAll('.link_group0').attr('opacity',1)
+        bg_rect.attr('fill','#22194D')
         koko_positions.forEach(el => {
             console.log('move: '+el.name+el.node+el.path),
             d3.select('#'+el.name).attr('transform',el.node)
@@ -216,6 +217,7 @@ if (view == 0){
         d3.select('#text_path').attr('d','M0,0C125,0,125,75,250,75')
         d3.selectAll('.node-group0').attr('opacity',0).attr('transform','translate(0,0)')
         d3.selectAll('.link_group0').attr('opacity',0).attr('d','M0,0C0,0,0,0,0,0')
+        bg_rect.attr('fill','#1B172F')
         // document.getElementById('contact').getAttribute('transform')
     }
   }
