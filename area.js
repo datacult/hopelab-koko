@@ -41,6 +41,25 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
+    /// scroll observer for initial load
+        let options = {
+            root: null,
+            rootMargin: "0px",
+            threshold: [.75]
+          };
+    
+            const scrollarea = document.querySelector('#area');
+    
+            const scrollareaObserver = new IntersectionObserver(handleScrollarea, options);
+        
+            function handleScrollarea(entry, observer) {
+                if (entry[0].intersectionRatio > .75) {
+                    update()
+                }
+            };
+        
+            scrollareaObserver.observe(scrollarea);
+
     ////////////////////////////////////
     //////////// Gradients ////////////
     //////////////////////////////////// 
@@ -171,10 +190,13 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke", "#7059E7")
         .attr("stroke-width", 4)
         .attr("stroke-linecap", "round")
-        .attr("d", d3.line()
-            .x(d => x(d[mapping.x]))
-            .y(d => y(d[mapping.y]))
-        )
+        // .attr("d",d3.line()
+        // .x(d => x(0))
+        // .y(d => y(0)))
+        // .attr("d", d3.line()
+        //     .x(d => x(d[mapping.x]))
+        //     .y(d => y(d[mapping.y]))
+        // )
 
     svg.append("text")
         .attr("x", 100)
@@ -236,8 +258,14 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("y2", (height - 150))
 
     //scroll update function
-    function update(val) {
-
+    function update() {
+        line
+        .transition()
+        .duration(5000)
+        .attr("d", d3.line()
+        .x(d => x(d[mapping.x]))
+        .y(d => y(d[mapping.y]))
+    )
     }
 
 })
