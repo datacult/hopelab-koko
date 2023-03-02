@@ -148,33 +148,44 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     ////////////////////////////////////
     //////////// add to DOM ////////////
     //////////////////////////////////// 
+    const zeroArea = d3.area()
+    .x(function(d) { return x(d[mapping.x]); })
+    .y0(height)
+    .y1(function() { return 0; });
 
-    const area =
-        svg.append("path")
+    const area = d3.area()
+    .x(d => x(d[mapping.x]))
+    .y0(y(0))
+    .y1(d => y(d[mapping.y]))
+
+    const areaChart = svg.append("path")
             .datum(data.filter(d => d[mapping.x] <= Date.parse("2023-01-02")))
+            .attr("d", function(d) {
+                return zeroArea(d)
+            })
             .attr("fill", "url(#mygrad)")
             .attr("fill-opacity", 0.8)
             .attr("stroke", "none")
-            .attr("d", d3.area()
-                .x(d => x(d[mapping.x]))
-                .y0(y(0))
-                .y1(d => y(d[mapping.y]))
-            )
 
     let last_point = data[data.length - 1]
 
     //arrow head
     svg.append("line")
+        .attr('class','arrow')
+        .attr('id','arrow-left')
         .attr("fill", "none")
         .attr("stroke", "#7059E7")
         .attr("stroke-width", 4)
         .attr("stroke-linecap", "round")
-        .attr("x1", x(last_point[mapping.x]) - 20)
+        .attr('x1',x(last_point[mapping.x]) + 1)
         .attr("x2", x(last_point[mapping.x]) + 1)
         .attr("y1", y(last_point[mapping.y]) - 1)
         .attr("y2", y(last_point[mapping.y]) - 1)
+        .attr('opacity',0)
 
     svg.append("line")
+        .attr('class','arrow')
+        .attr('id','arrow-right')
         .attr("fill", "none")
         .attr("stroke", "#7059E7")
         .attr("stroke-width", 4)
@@ -182,21 +193,28 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("x1", x(last_point[mapping.x]) + 1)
         .attr("x2", x(last_point[mapping.x]) + 1)
         .attr("y1", y(last_point[mapping.y]) - 1)
-        .attr("y2", y(last_point[mapping.y]) + 20)
+        .attr("y2", y(last_point[mapping.y]) - 1)
+        .attr('opacity',0)
 
     const line = svg.append("path")
         .datum(data)
+        .attr('id','graph-line')
         .attr("fill", "none")
         .attr("stroke", "#7059E7")
         .attr("stroke-width", 4)
         .attr("stroke-linecap", "round")
-        // .attr("d",d3.line()
-        // .x(d => x(0))
-        // .y(d => y(0)))
-        // .attr("d", d3.line()
-        //     .x(d => x(d[mapping.x]))
-        //     .y(d => y(d[mapping.y]))
-        // )
+        .attr("d",d3.line()
+        .x(d => x(0))
+        .y(d => y(0)))
+        .attr("d", d3.line()
+            .x(d => x(d[mapping.x]))
+            .y(d => y(d[mapping.y]))
+        )
+
+    var line_length = document.getElementById('graph-line').getTotalLength();
+
+    line.attr("stroke-dasharray", line_length + " " + line_length)
+    .attr("stroke-dashoffset", line_length)
 
     svg.append("text")
         .attr("x", 100)
@@ -259,13 +277,37 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
 
     //scroll update function
     function update() {
-        line
+        areaChart.transition()
+        .duration(1500)
+        .attr("d", function(d) {
+            return area(d)
+        })
+
+        line 
         .transition()
-        .duration(5000)
-        .attr("d", d3.line()
-        .x(d => x(d[mapping.x]))
-        .y(d => y(d[mapping.y]))
-    )
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0)
+        .delay(1500)
+        .duration(1500)
+
+        d3.selectAll('.arrow')
+        .transition()
+        .attr('opacity',1)
+        .delay(3000)
+        .duration(0)
+        
+        d3.select('#arrow-left')
+        .transition()
+        .attr("x1", x(last_point[mapping.x]) - 20)
+        .delay(3000)
+        .duration(500)
+
+        d3.select('#arrow-right')
+        .transition()
+        .attr("y2", y(last_point[mapping.y]) + 20)
+        .delay(3000)
+        .duration(500)
+
     }
 
 })
