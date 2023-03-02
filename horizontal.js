@@ -709,12 +709,12 @@ console.log(progress)
     prog = progress, ind = index
     if (index == 2 && progress > 0 && progress < .95){
         updatePosition(progress)
-    } else if (index == 2 && progress >= .95){
+    } else if (index == 2 && progress >= .95 && progress < 1){
         updatePosition(.95)
     } else if (index == 2 && progress <= 0){
         updatePosition(0)
     // } else if (index == 3 && progress >= 0 && progress <= .5) {
-    } else if (index == 3 && progress >= 0) {
+    } else if (index == 2 && progress >= 1) {
         updatePosition2(progress)
     }
     // } else if (index == 3 && progress > .5){
