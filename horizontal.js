@@ -726,8 +726,6 @@ var scroll = scroller()
 scroll(d3.selectAll('.step'));
 
 scroll.on('progress', function (index, progress) {
-console.log(index)
-console.log(progress)
     prog = progress, ind = index
     if (index == 2 && progress > 0 && progress < .95){
         updatePosition(progress)

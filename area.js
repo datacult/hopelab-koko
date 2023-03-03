@@ -7,7 +7,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     ////////////////////////////////////
     //////////// svg setup /////////////
     ////////////////////////////////////
-console.log(data)
+
     var body = d3.select(selector)
     body.html("")
 
@@ -126,10 +126,6 @@ console.log(data)
         ]
     }
         
-
-    
-
-    console.log(xAxisValues)
 
 
     const xAxis = d3.axisBottom(x)
