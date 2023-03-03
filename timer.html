@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+
+    <style>
+        body {
+            font-family: Avenir;
+        }
+
+        .h {
+            font-family: 'Avenir Next';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 1.9em;
+            line-height: 130%;
+            fill: #ffffff
+        }
+
+        svg text{
+            font-family: 'Avenir Next';
+        }
+
+        /* path {
+            transition: 1s;
+        } */
+
+        #time {
+            height: 200vh;
+            width: 100vw;
+        }
+
+        #timer {
+            background-color: #7059E7;
+        }
+
+        
+    </style>
+</head>
+
+<body>
+    <div id="scroll">
+        <div id="time"></div>
+        <div id="timer"></div>
+    </div>
+</body>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://datacult.github.io/hopelab-koko/timer.js"></script>
+<script src="https://datacult.github.io/hopelab-koko/timeme.min.js"></script>
+<script type="text/javascript">
+    // Initialize library and start tracking time
+    TimeMe.initialize({
+	    currentPageName: "my-home-page", // current page
+	    idleTimeoutInSeconds: 30 // seconds
+    });
+</script>
+<script>
+    async function init() {
+
+        let time_vis = time("#timer")
+
+    }
+    init()
+
+</script>
+
+</html>
