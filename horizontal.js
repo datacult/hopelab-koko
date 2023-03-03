@@ -568,7 +568,7 @@ var text_opacity = d3.scaleLinear()
     .range([1,1])
 
 var bracket_op = d3.scaleLinear()
-.domain([0,.75])
+.domain([.25,.75])
 .range([0,1])
 
 var bracket_op2 = d3.scaleLinear()
@@ -576,8 +576,8 @@ var bracket_op2 = d3.scaleLinear()
 .range([1,0])
 
 var line_pos = d3.scaleLinear()
-.domain([1,1.5,2])
-.range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5])
+.domain([1,1.5,2,3])
+.range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5,(width/5)+width*2/5-width*2/5])
 
 var mobile_font = d3.scaleLinear()
 .domain([0,.95])
@@ -669,8 +669,8 @@ function updatePosition2(percent){
 
         if (d.group !== 1 && !(isMobile)) {
             var position_x = d3.scaleLinear()
-            .domain([1,1.5,2])
-            .range([grid_layout[d.id-1].x,d.px,d.px-width*2/5])
+            .domain([1,1.5,2,3])
+            .range([grid_layout[d.id-1].x,d.px,d.px-width*2/5,d.px-width*2/5])
 
             var position_y = d3.scaleLinear()
             .domain([1,1.5,2])
