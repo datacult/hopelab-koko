@@ -100,20 +100,32 @@ console.log(data)
     //////////// Axis ////////////
     //////////////////////////////////// 
 
-    let xAxisValues = [
-        new Date("2022-01-20").getTime(),
-        new Date("2022-02-20").getTime(),
-        new Date("2022-03-20").getTime(),
-        new Date("2022-04-20").getTime(),
-        new Date("2022-05-20").getTime(),
-        new Date("2022-06-20").getTime(),
-        new Date("2022-07-20").getTime(),
-        new Date("2022-08-20").getTime(),
-        new Date("2022-09-20").getTime(),
-        new Date("2022-10-20").getTime(),
-        new Date("2022-11-20").getTime(),
-        new Date("2022-12-20").getTime()
-    ]
+    var xAxisValues
+    
+    if (isMobile){ 
+        xAxisValues = [
+            new Date("2022-01-20").getTime(),
+            new Date("2022-04-20").getTime(),
+            new Date("2022-07-20").getTime(),
+            new Date("2022-10-20").getTime()
+        ]
+    } else {
+        xAxisValues = [
+            new Date("2022-01-20").getTime(),
+            new Date("2022-02-20").getTime(),
+            new Date("2022-03-20").getTime(),
+            new Date("2022-04-20").getTime(),
+            new Date("2022-05-20").getTime(),
+            new Date("2022-06-20").getTime(),
+            new Date("2022-07-20").getTime(),
+            new Date("2022-08-20").getTime(),
+            new Date("2022-09-20").getTime(),
+            new Date("2022-10-20").getTime(),
+            new Date("2022-11-20").getTime(),
+            new Date("2022-12-20").getTime()
+        ]
+    }
+        
 
     
 
@@ -150,6 +162,10 @@ console.log(data)
 
     svg.selectAll('.domain').remove();
 
+    if (isMobile){
+        svg.selectAll('.tick').attr('font-size','14px')
+    }
+
     ////////////////////////////////////
     //////////// add to DOM ////////////
     //////////////////////////////////// 
@@ -184,7 +200,7 @@ console.log(data)
         .attr("stroke", "#7059E7")
         .attr("stroke-width", 4)
         .attr("stroke-linecap", "round")
-        .attr('x1',x(last_point[mapping.x]) + 1)
+        .attr('x1', x(last_point[mapping.x]) + 1)
         .attr("x2", x(last_point[mapping.x]) + 1)
         .attr("y1", y(last_point[mapping.y]) - 1)
         .attr("y2", y(last_point[mapping.y]) - 1)
@@ -306,11 +322,13 @@ console.log(data)
         d3.select('#arrow-left')
         .transition()
         .attr("x1", x(last_point[mapping.x]) - 20)
+        .attr("y1", isMobile ? y(last_point[mapping.y]) + 9 : y(last_point[mapping.y]) - 1)
         .delay(3000)
         .duration(500)
 
         d3.select('#arrow-right')
         .transition()
+        .attr("x2", isMobile ? x(last_point[mapping.x]) + 9 : x(last_point[mapping.x]) + 1)
         .attr("y2", y(last_point[mapping.y]) + 20)
         .delay(3000)
         .duration(500)
