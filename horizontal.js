@@ -246,7 +246,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .on("end", dragended)
     }
 
-    var center_y =  isMobile ? height / 2 : height/2, width_factor = isMobile ? 2.5 : 2
+    var center_y =  isMobile ? height / 3 : height/2, width_factor = isMobile ? 2.5 : 2
     var simulation = d3.forceSimulation(nodes)
         .force("charge", d3.forceManyBody().strength(1))
         .force("radial", d3.forceRadial(d => isMobile ? 200 : Math.floor(Math.random() * 320) + 300, width / width_factor, center_y))
@@ -337,7 +337,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 250 : height*170/900
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 200 : height*170/900
 // var grid_layout = []
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
@@ -356,7 +356,7 @@ function calcGrid(value) {
     /////////// treemap setup //////////
     ////////////////////////////////////
 
-    var img_x = start_x+(10*rect_width_tree), img_y = isMobile ? start_y+(6*rect_height_tree/2)+12 : start_y+(6*rect_height_tree)+12
+    var img_x = start_x+(10*rect_width_tree), img_y = isMobile ? start_y+(10*rect_height_tree)+12 : start_y+(6*rect_height_tree)+12
     var img_x1 = width+50, img_x2 = img_x+20, img_x3 = img_x2-(width*1.1);
 
     const tr_bracket = svg
@@ -392,10 +392,10 @@ function calcGrid(value) {
         .attr('stroke-linecap','round')
         .attr('fill','none')
         .attr('opacity',0)
-        .attr('transform', isMobile ? 'translate('+(265)+','+(432)+') rotate(90)' : 'translate('+img_x2+','+img_y+')')
+        .attr('transform', isMobile ? 'translate('+(265)+','+(182)+') rotate(90)' : 'translate('+img_x2+','+img_y+')')
     
     
-    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 530 : img_y+45, line_height = '3%', font_size = 20;
+    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 380 : img_y+45, line_height = '3%', font_size = 20;
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
