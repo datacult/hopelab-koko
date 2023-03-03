@@ -86,15 +86,8 @@ console.log(data)
     //////////// Scales ////////////
     //////////////////////////////////// 
 
-    function parseDate(dt) {
-        var a = dt.split(/[^0-9]/);
-        // var d = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
-        var d = new Date (a[0],a[1],a[2]);
-        return d
-    }
-
     const x = d3.scaleTime()
-        .domain([Date.parse("2022-1-10"), Date.parse("2023-01-02")])
+        .domain([new Date("2022-01-10").getTime(), new Date("2023-01-02").getTime()])
         .range([0, width]);
 
 
@@ -103,45 +96,28 @@ console.log(data)
         .domain([0, 100000])
         .range([height, 0]);
 
-        // console.log(Date.parse("2022-1-10"))
-        // console.log(parseDate("2022-01-10"))
-
     ////////////////////////////////////
     //////////// Axis ////////////
     //////////////////////////////////// 
 
     let xAxisValues = [
-        Date.parse("2022-01-20"),
-        Date.parse("2022-02-20"),
-        Date.parse("2022-03-20"),
-        Date.parse("2022-04-20"),
-        Date.parse("2022-05-20"),
-        Date.parse("2022-06-20"),
-        Date.parse("2022-07-20"),
-        Date.parse("2022-08-20"),
-        Date.parse("2022-09-20"),
-        Date.parse("2022-10-20"),
-        Date.parse("2022-11-20"),
-        Date.parse("2022-12-20")
+        new Date("2022-01-20").getTime(),
+        new Date("2022-02-20").getTime(),
+        new Date("2022-03-20").getTime(),
+        new Date("2022-04-20").getTime(),
+        new Date("2022-05-20").getTime(),
+        new Date("2022-06-20").getTime(),
+        new Date("2022-07-20").getTime(),
+        new Date("2022-08-20").getTime(),
+        new Date("2022-09-20").getTime(),
+        new Date("2022-10-20").getTime(),
+        new Date("2022-11-20").getTime(),
+        new Date("2022-12-20").getTime()
     ]
 
-    let xValues = [
-        parseDate("2022-01-20"),
-        parseDate("2022-02-20"),
-        parseDate("2022-03-20"),
-        parseDate("2022-04-20"),
-        parseDate("2022-05-20"),
-        parseDate("2022-06-20"),
-        parseDate("2022-07-20"),
-        parseDate("2022-08-20"),
-        parseDate("2022-09-20"),
-        parseDate("2022-10-20"),
-        parseDate("2022-11-20"),
-        parseDate("2022-12-20")
-    ]
+    
 
     console.log(xAxisValues)
-    console.log(xValues)
 
 
     const xAxis = d3.axisBottom(x)
@@ -188,7 +164,7 @@ console.log(data)
     .y1(d => y(d[mapping.y]))
 
     const areaChart = svg.append("path")
-            .datum(data.filter(d => d[mapping.x] <= Date.parse("2023-01-02")))
+            .datum(data.filter(d => d[mapping.x] <= new Date("2023-01-02").getTime()))
             // .datum(data.filter(d => d[mapping.x] <= "2023-01-02"))
             .attr("d", function(d) {
                 return zeroArea(d)
