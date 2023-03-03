@@ -49,7 +49,7 @@
 
         let data = await d3.csv('impact.csv', d3.autoType)
 
-        let mapping = { x: 'Date', y: 'Users' }
+        let mapping = { x: 'date', y: 'Users' }
 
         let dot_vis = area("#area", data, mapping)
 

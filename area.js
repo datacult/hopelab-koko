@@ -7,13 +7,13 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     ////////////////////////////////////
     //////////// svg setup /////////////
     ////////////////////////////////////
-
+console.log(data)
     var body = d3.select(selector)
     body.html("")
 
     // margins for SVG
     const margin = isMobile ? {
-        left: 50,
+        left: 75,
         right: 50,
         top: 50,
         bottom: 50
@@ -25,8 +25,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     }
 
     // responsive width & height
-    const svgWidth = 1000
-    const svgHeight = 700 //900 
+    const svgWidth = isMobile ? screen.width*1.5 : 1000
+    const svgHeight = isMobile ? screen.height*1.2 : 700 //900 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -86,15 +86,25 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     //////////// Scales ////////////
     //////////////////////////////////// 
 
+    function parseDate(dt) {
+        var a = dt.split(/[^0-9]/);
+        // var d = new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
+        var d = new Date (a[0],a[1],a[2]);
+        return d
+    }
 
     const x = d3.scaleTime()
         .domain([Date.parse("2022-1-10"), Date.parse("2023-01-02")])
         .range([0, width]);
 
+
     // Add Y axis
     const y = d3.scaleLinear()
         .domain([0, 100000])
         .range([height, 0]);
+
+        // console.log(Date.parse("2022-1-10"))
+        // console.log(parseDate("2022-01-10"))
 
     ////////////////////////////////////
     //////////// Axis ////////////
@@ -114,6 +124,25 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         Date.parse("2022-11-20"),
         Date.parse("2022-12-20")
     ]
+
+    let xValues = [
+        parseDate("2022-01-20"),
+        parseDate("2022-02-20"),
+        parseDate("2022-03-20"),
+        parseDate("2022-04-20"),
+        parseDate("2022-05-20"),
+        parseDate("2022-06-20"),
+        parseDate("2022-07-20"),
+        parseDate("2022-08-20"),
+        parseDate("2022-09-20"),
+        parseDate("2022-10-20"),
+        parseDate("2022-11-20"),
+        parseDate("2022-12-20")
+    ]
+
+    console.log(xAxisValues)
+    console.log(xValues)
+
 
     const xAxis = d3.axisBottom(x)
         .tickFormat(d3.timeFormat("%b"))
@@ -140,7 +169,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     svg.append("g")
         .call(yAxisGrid)
         .selectAll('line')
-        .attr("stroke-width", 0.5)
+        .attr("stroke-width", isMobile ? 1 : 0.5)
         .attr("stroke-opacity", 0.2);
 
     svg.selectAll('.domain').remove();
@@ -160,6 +189,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
 
     const areaChart = svg.append("path")
             .datum(data.filter(d => d[mapping.x] <= Date.parse("2023-01-02")))
+            // .datum(data.filter(d => d[mapping.x] <= "2023-01-02"))
             .attr("d", function(d) {
                 return zeroArea(d)
             })
@@ -168,6 +198,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
             .attr("stroke", "none")
 
     let last_point = data[data.length - 1]
+    // console.log(last_point)
 
     //arrow head
     svg.append("line")
@@ -217,13 +248,13 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     .attr("stroke-dashoffset", line_length)
 
     svg.append("text")
-        .attr("x", 100)
+        .attr("x", isMobile ? 25 : 100)
         .attr("y", 50)
         .text("In 2022, Koko helped")
         .attr("class", "h2");
 
     svg.append("text")
-        .attr("x", 100)
+        .attr("x", isMobile ? 25 : 100)
         .attr("y", 80)
         .text("close to 100,000 users")
         .attr("class", "h2")
@@ -237,7 +268,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("x", 0)
         .attr("y", 0)
         .text("Total Users Helped")
-        .attr("font-size", "0.8em")
+        .attr("font-size", isMobile ? "1.2em" : "0.8em")
         .attr("alignment-baseline", "middle")
         .attr("transform", `translate(${-margin.left / 2},${height}) rotate(270)`);
 
@@ -251,8 +282,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke-linecap", "round")
         .attr("x1", -margin.left / 2)
         .attr("x2", -margin.left / 2)
-        .attr("y1", height - 120)
-        .attr("y2", height - 150)
+        .attr("y1", isMobile ? height-180: height - 120)
+        .attr("y2", isMobile ? height-210:height - 150)
 
 
     svg.append("line")
@@ -262,8 +293,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke-linecap", "round")
         .attr("x1", (-margin.left / 2) - 7)
         .attr("x2", (-margin.left / 2))
-        .attr("y1", (height - 150) + 7)
-        .attr("y2", (height - 150))
+        .attr("y1", isMobile ? height-210+7:(height - 150) + 7)
+        .attr("y2", isMobile ? height-210:(height - 150))
 
     svg.append("line")
         .attr("fill", "none")
@@ -272,8 +303,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke-linecap", "round")
         .attr("x1", -(margin.left / 2) + 7)
         .attr("x2", -(margin.left / 2))
-        .attr("y1", (height - 150) + 7)
-        .attr("y2", (height - 150))
+        .attr("y1", isMobile ? height-210+7:(height - 150) + 7)
+        .attr("y2", isMobile ? height-210:(height - 150))
 
     //scroll update function
     function update() {

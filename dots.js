@@ -153,7 +153,7 @@ grid_layout.forEach(val => {
 
 
 var data_grid, ids = [];
-randomSelect(grid_layout,42,18,'white',.5,'#F1C54A',1)
+randomSelect(grid_layout,42,18,'white',.25,'#F1C54A',1)
 
 const dot = svg
         .selectAll(".dots")
@@ -165,7 +165,7 @@ const dot = svg
         .attr('cx',d => d.x)
         .attr('cy',d => d.y)
         .style("fill",d => ids.includes(d.id) ? d.fill : 'white')
-        .style("opacity",d => ids.includes(d.id) ? d.opacity : 1)
+        .style("opacity",d => ids.includes(d.id) ? d.opacity : .7)
 
 
 function randomSelect(arr,val,val2,fill,opac,fill2,opac2) {
@@ -195,20 +195,26 @@ function update(val){
     if (val == 1) {
 
         dot
+        .transition()
+        .duration(1500)
         .style("fill",d => ids.includes(d.id) ? d.fill : 'white')
         .style("opacity",d => ids.includes(d.id) ? d.opacity : 1)
 
     } else if (val == 2){
 
         dot
+        .transition()
+        .duration(1500)
         .style("fill",d => d.fill)
-        .style("opacity",d => d.opacity)
+        .style("opacity",d => ids.includes(d.id) ? 0 : d.opacity)
 
     } else if (val == 3){
 
         dot
+        .transition()
+        .duration(1500)
         .style("fill",'white')
-        .style("opacity",d => d.social == 'no' ? .1 : 1)
+        .style("opacity",d => d.social == 'no' ? .1 : .7)
 
     }   
 
