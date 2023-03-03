@@ -337,7 +337,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 150 : height*170/900
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 100 : height*170/900
 // var grid_layout = []
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
