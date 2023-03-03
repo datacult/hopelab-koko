@@ -73,23 +73,24 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('margin','0')
             .style('text-align','center')
             .style('color','#ffffff')
-            .style('font-size',isMobile ? '3rem': '1.33rem')
+            .style('font-size',isMobile ? '3rem': '1.5rem')
             .style('line-height','135%')
-            .style('font-family','Avenir')
-            .style('font-weight','500')
+            .style('font-family','Avenir Next')
+            .style('font-weight','400')
     
             text.append('br')
     
         var desc = text.append('p')
             .attr('class','force-desc')
             .text(desc_text)
-            .style('width',isMobile ? '600px': '450px')
+            .style('width',isMobile ? '600px': '400px')
             .style('margin','0')
             .style('text-align','center')
             .style('color','#ffffff')
-            .style('font-size',isMobile ? '2.6rem': '1.33rem')
+            .style('font-size',isMobile ? '2.6rem': '1rem')
             .style('line-height','135%')
-            .style('font-family','Avenir')
+            .style('font-family','Avenir Next')
+            .style('font-weight','300')
     
     
             var koko_int_text = `When redirected to Koko, the user is greeted with a variety of support options in an accessible way. `
@@ -118,7 +119,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('color','#ffffff')
                 .style('font-size',isMobile ? '2.8rem': '1.15rem')
                 .style('line-height','135%')
-                .style('font-family','Avenir')
+                .style('font-family','Avenir Next')
                 .style('font-weight','500')
                 .style('opacity',0)
     
