@@ -105,7 +105,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('display','flex')
                 .style('flex-direction','column')
                 .style('align-items','center')
-                .style('justify-content','center')
+                .style('justify-content','start')
                 .style('height','100%')
                 .style('width','100%')
         
@@ -114,6 +114,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('class','force-headline')
                 .text(koko_int_text)
                 .style('width',isMobile ? '600px': '450px')
+                .style('margin-top','25vh')
                 // .style('margin','auto')
                 .style('text-align','center')
                 .style('color','#ffffff')
@@ -127,7 +128,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('class','bakcground')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
-                // .style('margin','5vw auto')
+                .style('margin-top','5vh')
                 .style('z-index',100)
                 .style('opacity',0)
     
