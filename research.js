@@ -120,7 +120,7 @@ let research = ((selector) => {
     //     .attr('font-family','Avenir')
     //     .attr('font',18)
 
-    var label_size = isMobile ? 25 : 20, y_shift = isMobile ? 100 : 70
+    var label_size = isMobile ? 25 : 18, y_shift = isMobile ? 100 : 70
 
         svg.append('text')
             .text('Before')
@@ -227,7 +227,7 @@ let research = ((selector) => {
     drawLine(12.31,11.54,'#7059E7','koko')
     drawLine(12.48,12.8,'#1B172F','nokoko')
 
-    var ta_x = width-axis_padding-40, ta_y = y_axis(15), ea_y = y_axis(11), line_height = '3%', font_size = isMobile ? 32 : 22;
+    var ta_x = width-axis_padding-40, ta_y = y_axis(15.5), ea_y = y_axis(11), line_height = '4.5%', font_size = isMobile ? 32 : 20;
 
     var trad_annotation = svg.append('text')
         .attr('class','research_annotation')
@@ -327,7 +327,7 @@ let research = ((selector) => {
         .attr('class','research_annotation')
         .attr('id','enhance_anno')
         .attr('x',ta_x)
-        .attr('dy','3.5%')
+        .attr('dy','4.5%')
         .text(`Explore all of Koko's research publications `)
         .attr('font-size',isMobile ? font_size-6 : font_size-2)
         .attr('font-weight', 400)
