@@ -55,7 +55,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .append('div')
             .attr('class','force-text')
             .style('position','absolute')
-            .style('top',isMobile ? '-160px' : 0)
+            .style('top',isMobile ? '0px' : 0)
             .style('display','flex')
             .style('flex-direction','column')
             .style('align-items','center')
