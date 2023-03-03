@@ -246,7 +246,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .on("end", dragended)
     }
 
-    var center_y =  isMobile ? height / 2.5 : height/2, width_factor = isMobile ? 2.5 : 2
+    var center_y =  isMobile ? height / 2 : height/2, width_factor = isMobile ? 2.5 : 2
     var simulation = d3.forceSimulation(nodes)
         .force("charge", d3.forceManyBody().strength(1))
         .force("radial", d3.forceRadial(d => isMobile ? 200 : Math.floor(Math.random() * 320) + 300, width / width_factor, center_y))
@@ -337,7 +337,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 350 : height*170/900
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 250 : height*170/900
 // var grid_layout = []
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
