@@ -23,8 +23,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? screen.width : window.innerWidth//1440 
-    const svgHeight = isMobile ? screen.height : window.innerHeight*.7//630//850//900 
+    const svgWidth = isMobile ? screen.width : 1440 
+    const svgHeight = isMobile ? screen.height : 630//850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
