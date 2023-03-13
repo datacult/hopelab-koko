@@ -40,7 +40,15 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
+        var defs = svg.append('defs')
 
+        var blur_filter = defs.append('filter')
+            .attr('id','blur1')
+            .attr('x',0)
+            .attr('y',0)
+            .append('feGaussianBlur')
+            .attr('in','SourceGraphic')
+            .attr('stdDeviation','3')
 
         var header_text = `When a platform uses Koko’s detection library, they are able to identify significantly more high-risk content.`
         var desc_text = 'The detection library is constantly evolving to mirror trends and new types of concerning content.'
@@ -313,7 +321,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('text-anchor','middle')
             .style("fill","white")
             .style('font-size',16)
-            .style('filter','blur(3px)');
+            // .style('filter','blur(3px)');
+            .attr('filter','url(#blur1)')
 
     const node_rect = node
             .selectAll(".forceword_rect")
