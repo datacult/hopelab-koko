@@ -114,7 +114,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .data(lnk)
         .join("path")
         .attr('class',d => 'link_group'+d.target.data.value)
-        .attr('id',d => d.target.data.name == '. . .' || d.target.data.name == '' ? "empty"+d.source.data.name.replace(/\s/g, '')+'_path' : d.target.data.name.replace(/\s/g, '')+'_path')
+        .attr('id',d => d.target.data.name == 'and more...' || d.target.data.name == '' ? "empty"+d.source.data.name.replace(/\s/g, '')+'_path' : d.target.data.name.replace(/\s/g, '')+'_path')
           .attr("d", d3.linkHorizontal(curve)
             //   .x(d => {
             //     return d.depth == 2 ? d.y/2 : d.y
@@ -128,7 +128,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
       .data(root.descendants())
       .join("g")
       .attr('class',d => 'node-group'+d.data.value)
-      .attr('id',d => d.data.name == '. . .' || d.data.name == '' ? "empty"+d.parent.data.name.replace(/\s/g, '') : d.data.name.replace(/\s/g, ''))
+      .attr('id',d => d.data.name == 'and more...' || d.data.name == '' ? "empty"+d.parent.data.name.replace(/\s/g, '') : d.data.name.replace(/\s/g, ''))
       .attr('opacity',1)
       .attr("transform", d => `translate(${d.y-r*0.5},${d.x})`);
 
@@ -178,7 +178,7 @@ if (view == 0){
 
     root.descendants().forEach(el => {
         // console.log(el.data.name)
-        if (el.data.name == "" || el.data.name == ". . ."){
+        if (el.data.name == "" || el.data.name == "and more..."){
             koko_positions.push({"name":"empty"+el.parent.data.name.replace(/\s/g, ''),
                                 "node":document.getElementById("empty"+el.parent.data.name.replace(/\s/g, '')).getAttribute('transform'),
                                 "path":document.getElementById("empty"+el.parent.data.name.replace(/\s/g, '')+"_path").getAttribute('d')
