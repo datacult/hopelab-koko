@@ -126,18 +126,25 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('opacity',0)
     
             var img_div = txt.append('div')
-                .attr('class','bakcground')
+                .attr('class','background')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
                 .style('margin-top','12vh')
                 .style('z-index',100)
                 .style('opacity',0)
     
-            var int_image = img_div.append('img')
-                .attr('class','int-img')
+            var int_gif = img_div.append('img')
+                .attr('class','int-gif')
                 .attr('src','https://datacult.github.io/hopelab-koko/koko.gif')
                 .style('width',isMobile ? '60vw': '25vw')
                 .style('opacity',0)
+
+            var int_image = img_div.append('img')
+                .attr('class','int-img')
+                .attr('src','https://datacult.github.io/hopelab-koko/Message.png')
+                .style('width',isMobile ? '60vw': '30vw')
+                .style('opacity',0)
+                .attr('display','none')
 
 
 
@@ -749,8 +756,8 @@ function block_update(val) {
         header.text(header_text)
         desc.text(desc_text)
         int_text.text(koko_int_text)
-        int_image.attr('src','https://datacult.github.io/hopelab-koko/koko.gif')
-        .style('width',isMobile ? '60vw': '25vw')
+        int_image.attr('display','none')
+        int_gif.attr('display',1)
         img_div.style('background','#22194D')
         .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 5.5vw')
 
@@ -785,8 +792,11 @@ function block_update(val) {
         header.text(nokoko_text)
         desc.text('')
         int_text.text(nokoko_int_text)
-        int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
-        .style('width',isMobile ? '60vw': '30vw')
+        // int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
+        // .style('width',isMobile ? '60vw': '30vw')
+
+        int_image.attr('display',1)
+        int_gif.attr('display','none')
         img_div.style('background','#1B172F')
         .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
 
