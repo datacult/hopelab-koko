@@ -25,8 +25,8 @@ let research = ((selector) => {
     }
 
     // responsive width & height
-    const svgWidth = 720 
-    const svgHeight = isMobile ? screen.height*1.6 : 700//900 
+    const svgWidth = isMobile ? 720 : window.innerWidth*.5 
+    const svgHeight = isMobile ? screen.height*1.6 : window.innerHeight*.78 //700//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
@@ -80,7 +80,6 @@ let research = ((selector) => {
         enhancedObserver.observe(enhanced);
 
     // add SVG
-    // d3.select(`${selector} svg`).remove();
 
     const svg = d3.select(selector)
         .append('svg')
@@ -102,23 +101,6 @@ let research = ((selector) => {
         .attr('x2',width-axis_padding)
         .attr('y1',top_padding)
         .attr('y2',bottom_padding) 
-
-    // svg.append('text')
-    //     .text('0')
-    //     .attr('x',axis_padding/2)
-    //     .attr('y',bottom_padding)
-    //     .attr('text-anchor','middle')
-    //     .attr('font-family','Avenir')
-    //     .attr('font',18)
-
-    // svg.append('text')
-    //     .text('15')
-    //     .attr('x',axis_padding/2)
-    //     .attr('y',top_padding)
-    //     .attr('alignment-baseline','hanging')
-    //     .attr('text-anchor','middle')
-    //     .attr('font-family','Avenir')
-    //     .attr('font',18)
 
     var label_size = isMobile ? 25 : 18, y_shift = isMobile ? 100 : 70
 
@@ -215,13 +197,10 @@ let research = ((selector) => {
             .attr('id',state)
             .attr('x1',axis_padding)
             .attr('x2',axis_padding)
-            // .attr('x2',width-axis_padding-3)
             .attr('y1',y_axis(start_val))
             .attr('y2',y_axis(start_val))
-            // .attr('y2',y_axis(end_val))
             .style('stroke',color)
             .style('stroke-width','4px')
-            // .attr('marker-end',"url(#arrow"+state+")")
     }
 
     drawLine(12.31,11.54,'#7059E7','koko')
@@ -248,7 +227,6 @@ let research = ((selector) => {
         .text(`After the `)
         .append('tspan')
         .text('traditional crisis response')
-        // .attr('font-size',font_size-2)
         .attr('font-weight', 700)
         .attr('fill','#1B172F')
         .append('tspan')
@@ -290,7 +268,6 @@ let research = ((selector) => {
         .text(`After the `)
         .append('tspan')
         .text('enhanced crisis response')
-        // .attr('font-size',font_size-2)
         .attr('font-weight', 700)
         .attr('fill','#7059E7')
         .append('tspan')

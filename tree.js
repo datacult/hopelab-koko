@@ -13,8 +13,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         strokeLinejoin, // stroke line join for links
         strokeLinecap, // stroke line cap for links
         curve = d3.curveBumpX,
-        path, children, sort, //height,
-        // width = data_map.width,
+        path, children, sort,
         intervention_type = data_map.intervention_type
 
         var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
@@ -34,12 +33,9 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
   
   
     // Compute the layout.
-    // console.log(root)
     const dx = isMobile ? 100 : 50;
     const dy = isMobile ? 159 : 175//width / (root.height + padding);
     tree().nodeSize([dx, dy])(root);
-
-    // console.log(dy)
     
   
     // Center the tree.
@@ -50,20 +46,9 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
       if (d.x < x0) x0 = d.x;
     });
   
-    // Compute the default height.
-    // if (height === undefined) height = x1 - x0 + dx * 2;
   
     // Use the required curve
     if (typeof curve !== "function") throw new Error(`Unsupported curve`);
-    // console.log(curve)
-  
-    // const svg = d3.select('#tree-placeholder').append("svg")
-    //     .attr("viewBox", [-dy * padding / 2, x0 - dx, width, height])
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
-    //     .attr("font-family", "sans-serif")
-    //     .attr("font-size", 10);
 
     var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
 
@@ -81,17 +66,14 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? screen.width*1.8 : 864 
-    const svgHeight = isMobile ? screen.height*1.6 : 630//850//900 
-    // const svgWidth = window.innerWidth
-    // const svgHeight = window.innerHeight
+    const svgWidth = isMobile ? screen.width*1.8 : window.innerWidth*.6//864 
+    const svgHeight = isMobile ? screen.height*1.6 : window.innerHeight*.78//630//850//900 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
     const width = svgWidth - margin.left - margin.right
 
     // add SVG
-    // d3.select(`${selector} svg`).remove();
     var view = isMobile ? 10 : -dy * padding / 2
 
     const svg = d3.select('#tree-placeholder')
@@ -116,13 +98,9 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .attr('class',d => 'link_group'+d.target.data.value)
         .attr('id',d => d.target.data.name == 'and more...' || d.target.data.name == '' ? "empty"+d.source.data.name.replace(/\s/g, '')+'_path' : d.target.data.name.replace(/\s/g, '')+'_path')
           .attr("d", d3.linkHorizontal(curve)
-            //   .x(d => {
-            //     return d.depth == 2 ? d.y/2 : d.y
-            //    })
               .x(d => d.y)
               .y(d => d.x));
 
-// console.log(root.descendants())
     const node = svg.append("g")
       .selectAll(".node-group")
       .data(root.descendants())
@@ -167,9 +145,6 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .attr('x2',0)
         .attr('y1',0)
         .attr('y2',0)
-  
-    // return svg.node();
-// console.log(root.descendants())
 
 var view = 0, og_position_call, og_position_text, koko_positions = [];
 if (view == 0){
@@ -177,14 +152,12 @@ if (view == 0){
     og_position_text = document.getElementById('text').getAttribute('transform')
 
     root.descendants().forEach(el => {
-        // console.log(el.data.name)
         if (el.data.name == "" || el.data.name == "and more..."){
             koko_positions.push({"name":"empty"+el.parent.data.name.replace(/\s/g, ''),
                                 "node":document.getElementById("empty"+el.parent.data.name.replace(/\s/g, '')).getAttribute('transform'),
                                 "path":document.getElementById("empty"+el.parent.data.name.replace(/\s/g, '')+"_path").getAttribute('d')
                             })
         } else if (el.data.name !== 'call' & el.data.name !== 'text'& el.data.name !== 'detection'){
-            // console.log(el.data.name)
             koko_positions.push({"name":el.data.name.replace(/\s/g, ''),
                                 "node":document.getElementById(el.data.name.replace(/\s/g, '')).getAttribute('transform'),
                                 "path":document.getElementById(el.data.name.replace(/\s/g, '')+"_path").getAttribute('d')
@@ -193,7 +166,7 @@ if (view == 0){
     });
 
 }
-// console.log(koko_positions)
+
   function tree_update(val) {
     if (val == 'koko'){
         d3.select('#call').attr('transform',og_position_call)
@@ -209,7 +182,6 @@ if (view == 0){
             d3.select('#'+el.name+'_path').attr('d',el.path)
              
         })
-        // console.log()
     } else {
         d3.select('#call').attr('transform','translate(250,-75)')
         d3.select('#call_path').attr('d','M0,0C125,0,125,-75,250,-75')
@@ -218,7 +190,6 @@ if (view == 0){
         d3.selectAll('.node-group0').attr('opacity',0).attr('transform','translate(0,0)')
         d3.selectAll('.link_group0').attr('opacity',0).attr('d','M0,0C0,0,0,0,0,0')
         bg_rect.attr('fill','#1B172F')
-        // document.getElementById('contact').getAttribute('transform')
     }
   }
 

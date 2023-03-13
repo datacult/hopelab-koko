@@ -25,8 +25,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? screen.width*1.5 : 1000
-    const svgHeight = isMobile ? screen.height*1.2 : 700 //900 
+    const svgWidth = isMobile ? screen.width*1.5 : window.innerWidth//1000
+    const svgHeight = isMobile ? screen.height*1.2 : window.innerHeight//700 //900 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -177,7 +177,6 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
 
     const areaChart = svg.append("path")
             .datum(data.filter(d => d[mapping.x] <= new Date("2023-01-02").getTime()))
-            // .datum(data.filter(d => d[mapping.x] <= "2023-01-02"))
             .attr("d", function(d) {
                 return zeroArea(d)
             })
@@ -186,7 +185,6 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
             .attr("stroke", "none")
 
     let last_point = data[data.length - 1]
-    // console.log(last_point)
 
     //arrow head
     svg.append("line")

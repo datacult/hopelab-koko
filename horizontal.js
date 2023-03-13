@@ -8,8 +8,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     //////////// svg setup /////////////
     ////////////////////////////////////
 
-    // var body = d3.select(selector)
-    // body.html("")
 
     // margins for SVG
     const margin = isMobile ? {
@@ -25,8 +23,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? screen.width : 1440 
-    const svgHeight = isMobile ? screen.height : 630//850//900 
+    const svgWidth = isMobile ? screen.width : window.innerWidth//1440 
+    const svgHeight = isMobile ? screen.height : window.innerHeight*.78//630//850//900 
     // const svgWidth = window.innerWidth
     // const svgHeight = window.innerHeight
 
@@ -35,7 +33,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     const width = svgWidth - margin.left - margin.right
 
     // add SVG
-    // d3.select(`${selector} svg`).remove();
 
     const svg = d3.select(selector)
         .append('svg')
@@ -43,8 +40,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-    // const div = d3.select(selector)
-    //             .append('div')
 
 
         var header_text = `When a platform uses Koko’s detection library, they are able to identify significantly more high-risk content.`
@@ -63,7 +58,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('height','100%')
             .style('width','100%')
             .style('opacity',1)
-                // .style('margin','auto')
     
     
         var header = text.append('p')
@@ -115,7 +109,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .text(koko_int_text)
                 .style('width',isMobile ? '250px': '450px')
                 .style('margin-top','10vh')
-                // .style('margin','auto')
                 .style('text-align','center')
                 .style('color','#ffffff')
                 .style('font-size',isMobile ? '1.1rem': '1.15rem')
@@ -144,16 +137,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     //////////////wrangle///////////////
     ////////////////////////////////////
     var caught_value = 50, missed_value = 10, nokoko_low = 20, nokoko_high = 20, tree_count = 12
-    // if (state == 'koko'){
-    //     value = 90
-    //     tree_count = 12
-    // } else {
-    //     value = 30
-    //     tree_count = 8
-    // }
 
     var node_data = [], num_boxes = 100;
-    // var caught = Math.round(num_boxes*(value/100))
 
     for (let i = 0; i < caught_value; i++) {
         var force
@@ -212,7 +197,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
 
     var grid_layout = []
     for (let i = 0; i < num_boxes; i++) {
-    // for (let i = 0; i < num_boxes+1; i++) {
         grid_layout.push({ "id": i+1, "x": 0, "y": 0, "sim_x": 0, "sim_y": 0})
       }
 
@@ -269,7 +253,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     ////////////////////////////////////  
 
     var rect_height = 25, rect_width = 75, rect_width_tree = isMobile ? 70 : 70, rect_height_tree = isMobile ? 50 :50;
-    // , rect_width_tree = isMobile ? 35 : 70, rect_height_tree = isMobile ? 30 :50;
 
     const node = svg.append("g")
             .selectAll(".forceword")
@@ -305,7 +288,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .attr("width", rect_width)
             .style("fill","white")
             .style("fill-opacity",d => d.opacity)
-            // .style("opacity",d => d.force == "no" ? 0 : 1)
             .style('stroke','#ffffff')
             .style('stroke-opacity',d => d.opacity == 0.45 ? 1 : d.opacity)
             .style('stroke-width','2px');
@@ -338,17 +320,13 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
 
 
     var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 100 : height*170/900
-// var grid_layout = []
+
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
-
-    // var start_x = width/2-rect_width_tree*columns/2, start_y = height/2-rect_height_tree*rows/2;
-    //243
 
     grid_layout[value-1].x = start_x+rect_width_tree*(value-(Math.ceil(value/columns)-1)*columns)-rect_width_tree
     grid_layout[value-1].y = start_y+rect_height_tree*Math.ceil(value/columns)-rect_height_tree
 
-    // grid_layout.push({'id':value,'x':grid_x,'y':grid_y})
 
 }
 
@@ -596,8 +574,6 @@ var div_text_out = d3.scaleLinear()
         .range([1,0])
 
 function updatePosition(percent) {
-//    d3.selectAll('.force-text')
-//    .attr('x',position(percent)) 
 
     tr_bracket
     .attr('opacity',bracket_op(percent))
@@ -638,8 +614,6 @@ function updatePosition(percent) {
     .attr('y',grid_position_y(percent))
     .attr('width',size_width(percent))
     .attr('height',size_height(percent))
-    // .style('opacity',d.force == "no" ? force_opacity(percent) : 1)
-    // .style("stroke",d.class == "missed" ? missed_stroke(percent) : '#ffffff')
     .style("fill-opacity",d.class == "missed" ? missed_opacity(percent) : (d.class == "no_low" ? low_opacity(percent) : (d.class == "no_high" ? high_opacity(percent) : d.opacity)))
     .style("stroke-opacity",d.class == "missed" ? missed_stroke(percent) : (d.class == "no_low" ? low_stroke(percent) : (d.class == "no_high" ? high_stroke(percent) : 1)))
 })
@@ -663,7 +637,6 @@ function updatePosition2(percent){
     img_div.style('opacity',div_bg_in(percent))
 
     d3.select('.int_line').attr('x1',line_pos(percent))
-    // console.log(percent)
 
     node_data.forEach(d => {
 
@@ -703,20 +676,6 @@ function updatePosition2(percent){
     })
 }
 
-// function updatePosition3(percent){
-//     node_data.forEach(d => {
-
-//         if (d.group != 1) {
-//             var position_x = d3.scaleLinear()
-//             .domain([.5,1])
-//             .range([d.px,d.px-width*2/5])
-    
-//             d3.select('#word'+d.id)
-//                 .attr('x',position_x(percent))
-//         }
-//     })
-// }
-
 // setup scroll functionality
 var prog, ind
 var scroll = scroller()
@@ -733,13 +692,9 @@ scroll.on('progress', function (index, progress) {
         updatePosition(.95)
     } else if (index == 2 && progress <= 0){
         updatePosition(0)
-    // } else if (index == 3 && progress >= 0 && progress <= .5) {
     } else if (index == 2 && progress >= 1) { 
         updatePosition2(progress)
     }
-    // } else if (index == 3 && progress > .5){
-    //     updatePosition3(progress)
-    // }
 });
 
 function block_update(val) {
@@ -779,7 +734,6 @@ function block_update(val) {
         d3.selectAll('.no_high').style('stroke-opacity',ind == 2 ? high_stroke(prog) : (ind > 2 ? high_stroke(1) : high_stroke(0))).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
         d3.selectAll('.groupcaught3').style('opacity',1)
           
-        // console.log()
     } else {
         header.text(nokoko_text)
         desc.text('')
