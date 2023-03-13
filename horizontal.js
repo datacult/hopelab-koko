@@ -138,13 +138,14 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('src','https://datacult.github.io/hopelab-koko/koko.gif')
                 .style('width',isMobile ? '60vw': '25vw')
                 .style('opacity',0)
+                .style('display','block')
 
             var int_image = img_div.append('img')
                 .attr('class','int-img')
                 .attr('src','https://datacult.github.io/hopelab-koko/Message.png')
                 .style('width',isMobile ? '60vw': '30vw')
                 .style('opacity',0)
-                .attr('display','none')
+                .style('display','none')
 
 
 
@@ -688,6 +689,7 @@ function updatePosition2(percent){
 
     int_text.style('opacity',div_text_in(percent))
     int_image.style('opacity',div_text_in(percent))
+    int_gif.style('opacity',div_text_in(percent))
     img_div.style('opacity',div_bg_in(percent))
 
     d3.select('.int_line').attr('x1',line_pos(percent))
@@ -756,8 +758,8 @@ function block_update(val) {
         header.text(header_text)
         desc.text(desc_text)
         int_text.text(koko_int_text)
-        int_image.attr('display','none')
-        int_gif.attr('display',1)
+        int_image.style('display','none')
+        int_gif.style('display','block')
         img_div.style('background','#22194D')
         .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 5.5vw')
 
@@ -795,8 +797,8 @@ function block_update(val) {
         // int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
         // .style('width',isMobile ? '60vw': '30vw')
 
-        int_image.attr('display',1)
-        int_gif.attr('display','none')
+        int_image.style('display','block')
+        int_gif.style('display','none')
         img_div.style('background','#1B172F')
         .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
 
