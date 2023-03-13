@@ -102,7 +102,7 @@ let research = ((selector) => {
         .attr('y1',top_padding)
         .attr('y2',bottom_padding) 
 
-    var label_size = isMobile ? 25 : 18, y_shift = isMobile ? 100 : 70
+    var label_size = isMobile ? 25 : 16, y_shift = isMobile ? 100 : 70
 
         svg.append('text')
             .text('Before')
@@ -200,13 +200,13 @@ let research = ((selector) => {
             .attr('y1',y_axis(start_val))
             .attr('y2',y_axis(start_val))
             .style('stroke',color)
-            .style('stroke-width','4px')
+            .style('stroke-width','3px')
     }
 
     drawLine(12.31,11.54,'#7059E7','koko')
     drawLine(12.48,12.8,'#1B172F','nokoko')
 
-    var ta_x = width-axis_padding-40, ta_y = y_axis(15.5), ea_y = y_axis(11), line_height = '4.5%', font_size = isMobile ? 32 : 20;
+    var ta_x = width-axis_padding-40, ta_y = y_axis(15.5), ea_y = y_axis(11), line_height = '4.5%', font_size = isMobile ? 32 : 18;
 
     var trad_annotation = svg.append('text')
         .attr('class','research_annotation')
