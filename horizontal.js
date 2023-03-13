@@ -230,23 +230,61 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .on("end", dragended)
     }
 
-    var center_y =  isMobile ? height / 3 : height/2, width_factor = isMobile ? 2.5 : 2
-    var simulation = d3.forceSimulation(nodes)
-        .force("charge", d3.forceManyBody().strength(1))
-        .force("radial", d3.forceRadial(d => isMobile ? 225 : Math.floor(Math.random() * 320) + 300, width / width_factor, center_y))
+    var center_y =  isMobile ? height / 3 : height/2, width_factor = isMobile ? 2.5 : 2, center_x = width/width_factor, r = isMobile ? 225 : 280
+    var simulation 
+    
+    if (isMobile) {
+        simulation = d3.forceSimulation(nodes)
+        .force("charge", d3.forceManyBody().strength(10))
+        .force("radial", d3.forceRadial(d =>  225 , width / width_factor, center_y))
         .force("collide", d3.forceCollide().radius(d => d.r))
         .force("center", d3.forceCenter(width / width_factor, center_y))
-        .force("bouding-circle", () => {
-            var min = isMobile ? 540 : 290, max = isMobile ? 550 : 300
+        .force("bounding-circle", () => {
+            var min = 540 
+            , max = 550
             nodes.forEach(node => {
-              if (node.y < center_y - max || node.y > center_y + min) {
-                // node.x = Math.floor(Math.random() * 270) + 240//... // new x position
-                node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
-              }
+                    if (node.y < center_y - max || node.y > center_y + min) {
+                        // node.x = Math.floor(Math.random() * 270) + 240//... // new x position
+                        node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
+                    }
             })
           })
         .tick(1)
-
+    } else {
+        simulation = d3.forceSimulation(nodes)
+        .force("charge", d3.forceManyBody().strength(-12))
+        .force("collide", d3.forceCollide().radius(d => d.r))
+        .force("center", d3.forceCenter(width / width_factor, center_y))
+        .force("bounding-circle", () => {
+            var min = 150//290
+            , max = 160//300
+            nodes.forEach(node => {
+                    if (node.y < 30) {
+                        node.x = Math.floor(Math.random() * (center_x-r)) + (center_x*.1)//... // new x position
+                        node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
+                      } 
+                      
+                      if (node.y > height - 70) {
+                        node.x = Math.floor(Math.random() * (center_x*.9)) + (center_x+r)//... // new x position
+                        node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
+                      } 
+                      
+                      if (node.y > center_y - 110 && node.y < center_y + 100 && node.x > center_x - r && node.x < center_x+r) {
+                        // node.x = Math.floor(Math.random() * 270) + 240//... // new x position
+                        node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
+                      } 
+        
+                      if (node.x > width*.9){
+                        node.x = Math.floor(Math.random() * (center_x*.9)) + (center_x+r)
+                      }
+        
+                      if (node.x < width*.1){
+                        node.x = Math.floor(Math.random() * (center_x-r)) + (center_x*.1)
+                      }
+            })
+          })
+        .tick(1)
+        }
 
     ////////////////////////////////////
     //////////// add to DOM ////////////
