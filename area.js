@@ -237,13 +237,15 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("x", isMobile ? 25 : 100)
         .attr("y", 50)
         .text("In 2022, Koko helped")
-        .attr("class", "h2");
+        .attr("class", "h2")
+        .style("font-size", isMobile?"2em":"1.5em")
 
     svg.append("text")
         .attr("x", isMobile ? 25 : 100)
-        .attr("y", 80)
+        .attr("y", isMobile ? 95 : 80)
         .text("close to 100,000 users")
         .attr("class", "h2")
+        .style("font-size", isMobile?"2em":"1.5em")
         .append("tspan")
         .text(" 7")
         .attr("font-size", "0.5em")

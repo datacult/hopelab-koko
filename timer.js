@@ -245,7 +245,7 @@ let time = ((selector = '#timer') => {
         .duration(1500)
         .attr('x',x(timeSpent)-10)
 
-        d3.select('#time-1')
+        d3.selectAll('#time-1')
         .text(isMobile ? `${timeSpent} minutes`:`It took you ${timeSpent} minutes`)
 
     }

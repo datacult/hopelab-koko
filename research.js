@@ -206,7 +206,7 @@ let research = ((selector) => {
     drawLine(12.31,11.54,'#7059E7','koko')
     drawLine(12.48,12.8,'#1B172F','nokoko')
 
-    var ta_x = width-axis_padding-40, ta_y = y_axis(15.5), ea_y = y_axis(11), line_height = '4.5%', font_size = isMobile ? 32 : 18;
+    var ta_x = width-axis_padding-40, ta_y = y_axis(15.5), ea_y = y_axis(11), line_height = isMobile ? '3%' :'4.5%', font_size = isMobile ? 32 : 18;
 
     var trad_annotation = svg.append('text')
         .attr('class','research_annotation')
