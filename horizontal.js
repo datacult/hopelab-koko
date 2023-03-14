@@ -129,7 +129,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('class','background')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
-                .style('margin-top','5vh')
+                .style('margin-top',isMobile ? '12vh':'5vh')
                 .style('display','flex')
                 .style('flex-direction','column')
                 .style('align-items','center')
