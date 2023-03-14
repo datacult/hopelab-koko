@@ -129,7 +129,12 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('class','background')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
-                .style('margin-top','12vh')
+                .style('margin-top','8vh')
+                .style('display','flex')
+                .style('flex-direction','column')
+                .style('align-items','center')
+                .style('justify-content','center')
+                .style('height','26vw')
                 .style('z-index',100)
                 .style('opacity',0)
     
@@ -143,7 +148,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             var int_image = img_div.append('img')
                 .attr('class','int-img')
                 .attr('src','https://datacult.github.io/hopelab-koko/Message.png')
-                .style('width',isMobile ? '60vw': '30vw')
+                .style('width',isMobile ? '60vw': '25vw')
                 .style('opacity',0)
                 .style('display','none')
 
