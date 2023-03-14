@@ -13,20 +13,20 @@ let time = ((selector = '#timer') => {
 
     // margins for SVG
     const margin = isMobile ? {
-        left: 75,
-        right: 50,
-        top: 50,
+        left: 5,
+        right: 10,
+        top: 100,
         bottom: 50
     } : {
-        left: 100,
-        right: 100,
+        left: 5,
+        right: 10,
         top: 100,
-        bottom: 100
+        bottom: 40
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? screen.width*1.5 : 850
-    const svgHeight = isMobile ? screen.height*1.2 : 325 //900 
+    const svgWidth = isMobile ? screen.width*1 : 850
+    const svgHeight = isMobile ? screen.height*.5 : 325 //900 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -77,7 +77,7 @@ let time = ((selector = '#timer') => {
     ////////////////////////////////////
     //////////// Axis ////////////
     //////////////////////////////////// 
-    var bar_size = height/3
+    var bar_size = isMobile ? height/5 : height/3
 
     var xAxisValues = [
             0,
@@ -106,21 +106,22 @@ let time = ((selector = '#timer') => {
         svg.select(".x-axis")
             .selectAll('text')
             .attr("fill","#ffffff")
-            .attr("font-size",'10px')
+            .attr("font-size",isMobile ? '16px' : '10px')
             .attr('y',10);
 
         svg.append('text')
             .text('Minutes')
             .attr('x',x(0)-3)
-            .attr('y',height+35)
+            .attr('y',isMobile ? height+45 : height+35)
             .attr("fill","#ffffff")
-            .attr("font-size",'10px')
+            .attr("font-size",isMobile ? '16px' : '10px')
 
     svg.selectAll('.domain').remove();
 
     ////////////////////////////////////
     //////////// add to DOM ////////////
     //////////////////////////////////// 
+
     svg.append('rect')
         .attr('class','time-bg')
         .attr('height',bar_size)
@@ -136,14 +137,53 @@ let time = ((selector = '#timer') => {
         .attr("y", 0)
         .text("It took you XX minutes")
         .attr("class", "h")
-        .style('fill','#ffffff');
+        .style('fill','#ffffff')
+        .attr('display',isMobile ? 'none' : 1);
 
     svg.append("text")
         .attr("x", 0)
         .attr("y", 45)
         .text("to get to the bottom of this page.")
         .attr("class", "h")
-        .style('fill','#ffffff');
+        .style('fill','#ffffff')
+        .attr('display',isMobile ? 'none' : 1);
+
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .text("It took you")
+        .attr("class", "h")
+        .style('fill','#ffffff')
+        .style('font-size','2.2em')
+        .attr('display',isMobile ? 1 : 'none');
+
+    svg.append("text")
+        .attr('id','time-1')
+        .attr("x", 0)
+        .attr("y", 45)
+        .text("XX minutes")
+        .attr("class", "h")
+        .style('fill','#ffffff')
+        .style('font-size','2.2em')
+        .attr('display',isMobile ? 1 : 'none');
+
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", 90)
+        .text("to get to the bottom")
+        .attr("class", "h")
+        .style('fill','#ffffff')
+        .style('font-size','2.2em')
+        .attr('display',isMobile ? 1 : 'none');
+
+        svg.append("text")
+        .attr("x", 0)
+        .attr("y", 135)
+        .text("of this page.")
+        .attr("class", "h")
+        .style('fill','#ffffff')
+        .style('font-size','2.2em')
+        .attr('display',isMobile ? 1 : 'none');
 
     svg.append("line")
         .attr('class','time-end')
@@ -157,7 +197,7 @@ let time = ((selector = '#timer') => {
         .attr("y2", height)
 
     var timeSpent = 0
-    var time_size = height/4
+    var time_size = height/6
     svg.append('rect')
         .attr('class','time-bar')
         .attr('height',time_size)
@@ -177,10 +217,10 @@ let time = ((selector = '#timer') => {
     svg.append('text')
         .attr('class','time-text')
         .attr('x',x(0))
-        .attr('y',height-bar_size/2+4)
+        .attr('y',isMobile ? height-bar_size/2+6: height-bar_size/2+4)
         .text(timeSpent)
         .attr('fill','#7059E7')
-        .attr('font-size','.8em')
+        .attr('font-size',isMobile ? '1em':'.8em')
         .attr('font-weight','700')
         .attr('text-anchor','end')
 
@@ -190,11 +230,8 @@ let time = ((selector = '#timer') => {
         
         //call timeMe function
         let timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
-console.log(timeSpentOnPage)
         //round to minutes and set time variable
         timeSpent = Math.round(timeSpentOnPage/6)/10
-        console.log(timeSpent)
-        console.log(x(timeSpent))
 
 
         d3.select('.time-bar')
@@ -209,7 +246,7 @@ console.log(timeSpentOnPage)
         .attr('x',x(timeSpent)-10)
 
         d3.select('#time-1')
-        .text(`It took you ${timeSpent} minutes`)
+        .text(isMobile ? `${timeSpent} minutes`:`It took you ${timeSpent} minutes`)
 
     }
 
