@@ -755,6 +755,9 @@ scroll.on('progress', function (index, progress) {
         updatePosition(0)
     } else if (index == 2 && progress >= 1) { 
         updatePosition2(progress)
+    } else if (index < 2){
+        updatePosition2(1)
+        updatePosition(0)
     }
 });
 
