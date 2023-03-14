@@ -35,6 +35,12 @@ let dots = ((selector = '#dot-placeholder') => {
     // add SVG
     d3.select(`${selector} svg`).remove();
 
+    d3.select(selector)
+    .style('display','flex')
+    .style('flex-direction','column')
+    .style('align-items','center')
+    .style('justify-content','center')
+
     const svg = d3.select(selector)
         .append('svg')
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
