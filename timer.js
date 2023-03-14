@@ -21,7 +21,7 @@ let time = ((selector = '#timer') => {
         left: 5,
         right: 10,
         top: 100,
-        bottom: 40
+        bottom: 50
     }
 
     // responsive width & height
@@ -106,15 +106,15 @@ let time = ((selector = '#timer') => {
         svg.select(".x-axis")
             .selectAll('text')
             .attr("fill","#ffffff")
-            .attr("font-size",isMobile ? '16px' : '10px')
+            .attr("font-size",isMobile ? '16px' : '14px')
             .attr('y',10);
 
         svg.append('text')
             .text('Minutes')
             .attr('x',x(0)-3)
-            .attr('y',isMobile ? height+45 : height+35)
+            .attr('y',isMobile ? height+45 : height+45)
             .attr("fill","#ffffff")
-            .attr("font-size",isMobile ? '16px' : '10px')
+            .attr("font-size",isMobile ? '16px' : '14px')
 
     svg.selectAll('.domain').remove();
 
@@ -137,14 +137,16 @@ let time = ((selector = '#timer') => {
         .attr("y", 0)
         .text("It took you XX minutes")
         .attr("class", "h")
+        .style('font-size','2.6em')
         .style('fill','#ffffff')
         .attr('display',isMobile ? 'none' : 1);
 
     svg.append("text")
         .attr("x", 0)
-        .attr("y", 45)
+        .attr("y", 50)
         .text("to get to the bottom of this page.")
         .attr("class", "h")
+        .style('font-size','2.6em')
         .style('fill','#ffffff')
         .attr('display',isMobile ? 'none' : 1);
 
