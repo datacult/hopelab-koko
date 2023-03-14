@@ -578,11 +578,11 @@ var size_height = d3.scaleLinear()
     .range([rect_height,rect_height_tree])
 
 var text_position_x = d3.scaleLinear()
-    .domain([0,.90])
+    .domain([0,.85])
     .range([rect_width/2,rect_width_tree/2])
 
 var text_position_y = d3.scaleLinear()
-    .domain([0,.90])
+    .domain([0,.85])
     .range([(rect_height/2+4),(rect_height_tree/2+4)])
 
 var size_width2 = d3.scaleLinear()
@@ -618,7 +618,7 @@ var line_pos = d3.scaleLinear()
 .range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5,(width/5)+width*2/5-width*2/5])
 
 var mobile_font = d3.scaleLinear()
-.domain([0,.90])
+.domain([0,.85])
 .range([1,.5])
 
 var div_text_in = d3.scaleLinear()
@@ -653,11 +653,11 @@ function updatePosition(percent) {
     calcGrid(d.id)
 
     var grid_position_x = d3.scaleLinear()
-    .domain([0,.90])
+    .domain([0,.85])
     .range([grid_layout[d.id-1].sim_x,grid_layout[d.id-1].x])
 
     var grid_position_y = d3.scaleLinear()
-    .domain([0,.90])
+    .domain([0,.85])
     .range([grid_layout[d.id-1].sim_y,grid_layout[d.id-1].y])
 
     d3.select('#groupword'+d.id)
@@ -747,10 +747,10 @@ scroll(d3.selectAll('.step'));
 
 scroll.on('progress', function (index, progress) {
     prog = progress, ind = index
-    if (index == 2 && progress >= 0 && progress < .90){
+    if (index == 2 && progress >= 0 && progress < .85){
         updatePosition(progress)
-    } else if (index == 2 && progress >= .90 && progress < 1){
-        updatePosition(.90)
+    } else if (index == 2 && progress >= .85 && progress < 1){
+        updatePosition(.85)
     } else if (index == 2 && progress <= 0){
         updatePosition(0)
     } else if (index == 2 && progress >= 1) { 
