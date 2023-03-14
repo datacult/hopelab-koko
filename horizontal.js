@@ -129,7 +129,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('class','background')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
-                .style('margin-top','8vh')
+                .style('margin-top','5vh')
                 .style('display','flex')
                 .style('flex-direction','column')
                 .style('align-items','center')
@@ -379,7 +379,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 100 : height*170/900
+    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 100 : (((window.innerWidth/window.innerHeight)>16/10) ? height*170/900 - 75 : height*170/900)
 
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
@@ -578,11 +578,11 @@ var size_height = d3.scaleLinear()
     .range([rect_height,rect_height_tree])
 
 var text_position_x = d3.scaleLinear()
-    .domain([0,.95])
+    .domain([0,.90])
     .range([rect_width/2,rect_width_tree/2])
 
 var text_position_y = d3.scaleLinear()
-    .domain([0,.95])
+    .domain([0,.90])
     .range([(rect_height/2+4),(rect_height_tree/2+4)])
 
 var size_width2 = d3.scaleLinear()
@@ -618,7 +618,7 @@ var line_pos = d3.scaleLinear()
 .range([width+50,(width/5)+width*2/5,(width/5)+width*2/5-width*2/5,(width/5)+width*2/5-width*2/5])
 
 var mobile_font = d3.scaleLinear()
-.domain([0,.95])
+.domain([0,.90])
 .range([1,.5])
 
 var div_text_in = d3.scaleLinear()
@@ -653,11 +653,11 @@ function updatePosition(percent) {
     calcGrid(d.id)
 
     var grid_position_x = d3.scaleLinear()
-    .domain([0,.95])
+    .domain([0,.90])
     .range([grid_layout[d.id-1].sim_x,grid_layout[d.id-1].x])
 
     var grid_position_y = d3.scaleLinear()
-    .domain([0,.95])
+    .domain([0,.90])
     .range([grid_layout[d.id-1].sim_y,grid_layout[d.id-1].y])
 
     d3.select('#groupword'+d.id)
@@ -747,10 +747,10 @@ scroll(d3.selectAll('.step'));
 
 scroll.on('progress', function (index, progress) {
     prog = progress, ind = index
-    if (index == 2 && progress > 0 && progress < .95){
+    if (index == 2 && progress >= 0 && progress < .90){
         updatePosition(progress)
-    } else if (index == 2 && progress >= .95 && progress < 1){
-        updatePosition(.95)
+    } else if (index == 2 && progress >= .90 && progress < 1){
+        updatePosition(.90)
     } else if (index == 2 && progress <= 0){
         updatePosition(0)
     } else if (index == 2 && progress >= 1) { 
