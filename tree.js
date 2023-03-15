@@ -131,7 +131,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .attr("dy", "0.32em")
         .attr('x',r*5/2)
         .attr("text-anchor",'middle')
-        .attr('font-family','Avenir')
+        .attr('font-family','Avenir Next')
         .attr('fill','white')
         .attr('font-size',isMobile ? 18 : 16)
         .text(d => d.data.name);

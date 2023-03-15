@@ -110,7 +110,7 @@ let research = ((selector) => {
             .attr('x',axis_padding)
             .attr('y',top_padding/2)
             .attr('text-anchor','middle')
-            .attr('font-family','Avenir')
+            .attr('font-family','Avenir Next')
             .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
@@ -121,7 +121,7 @@ let research = ((selector) => {
             .attr('x',width-axis_padding)
             .attr('y',top_padding/2)
             .attr('text-anchor','middle')
-            .attr('font-family','Avenir')
+            .attr('font-family','Avenir Next')
             .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
@@ -133,7 +133,7 @@ let research = ((selector) => {
             .attr('y',axis_padding-10)
             .attr('text-anchor','middle')
             .attr('transform','rotate(-90)')
-            .attr('font-family','Avenir')
+            .attr('font-family','Avenir Next')
             .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
@@ -145,7 +145,7 @@ let research = ((selector) => {
             .attr('y',axis_padding-10)
             .attr('text-anchor','middle')
             .attr('transform','rotate(-90)')
-            .attr('font-family','Avenir')
+            .attr('font-family','Avenir Next')
             .attr('font-size',label_size)
             .attr('font-weight',600)
             .style('opacity',0)
@@ -216,7 +216,7 @@ let research = ((selector) => {
         .attr('font-size',font_size)
         .attr('font-weight', 500)
         .attr('text-anchor','end')
-        .attr('font-family','Avenir')
+        .attr('font-family','Avenir Next')
         .attr('opacity',0);
 
     trad_annotation.append('tspan')
@@ -257,7 +257,7 @@ let research = ((selector) => {
         .attr('font-size',font_size)
         .attr('font-weight', 500)
         .attr('text-anchor','end')
-        .attr('font-family','Avenir')
+        .attr('font-family','Avenir Next')
         .attr('opacity',0);
 
     enhance_annotation.append('tspan')
