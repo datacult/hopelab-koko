@@ -24,11 +24,11 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }
 
     // responsive width & height
-    const svgWidth = isMobile ? 375 : 1440 
-    const svgHeight = isMobile ? 812 : 630//850//900 
+    // const svgWidth = isMobile ? 375 : 1440 
+    // const svgHeight = isMobile ? 812 : 630//850//900 
     
-    // const svgWidth = isMobile ? screen.width : 1440 
-    // const svgHeight = isMobile ? screen.height : 630//850//900 
+    const svgWidth = isMobile ? screen.width : 1440 
+    const svgHeight = isMobile ? screen.height : 630//850//900 
 
     // console.log(screen.width)
     // console.log(screen.height)
@@ -384,7 +384,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? 7 : width*135/1440, start_y = isMobile ? 100 : (((window.innerWidth/window.innerHeight)>16/9.75) ? height*170/900 - 75 : height*170/900)
+    var start_x = isMobile ? (width-rect_width_tree*10)/2 : width*135/1440, start_y = isMobile ? 100 : (((window.innerWidth/window.innerHeight)>16/9.75) ? height*170/900 - 75 : height*170/900)
 
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
