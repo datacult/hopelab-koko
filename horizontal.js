@@ -82,7 +82,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('color','#ffffff')
             .style('font-size',isMobile ? '1.1rem': '1.5rem')
             .style('line-height','135%')
-            .style('font-family','Avenir Next')
+            .style('font-family','Avenirnext 08')
             .style('font-weight','400')
     
             text.append('br')
@@ -96,7 +96,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('color','#ffffff')
             .style('font-size',isMobile ? '.9rem': '1rem')
             .style('line-height','135%')
-            .style('font-family','Avenir Next')
+            .style('font-family','Avenirnext 08')
             .style('font-weight',isMobile ? '400':'300')
     
     
@@ -126,7 +126,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('color','#ffffff')
                 .style('font-size',isMobile ? '1.1rem': '1.15rem')
                 .style('line-height','135%')
-                .style('font-family','Avenir Next')
+                .style('font-family','Avenirnext 06')
                 .style('font-weight','500')
                 .style('opacity',0)
     
