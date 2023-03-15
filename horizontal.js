@@ -433,7 +433,7 @@ function calcGrid(value) {
         .attr('transform', isMobile ? 'translate('+(265)+','+(302)+') rotate(90)' : 'translate('+img_x2+','+img_y+')')
     
     
-    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 380 : img_y+45, line_height = '3%', font_size = 20;
+    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 380 : img_y+45, line_height = (window.innerWidth/window.innerHeight > 16/10) ? 22 : 24, font_size = (window.innerWidth/window.innerHeight > 16/10) ? 18 : 20;
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
