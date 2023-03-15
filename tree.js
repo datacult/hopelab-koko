@@ -81,7 +81,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     .style('flex-direction','column')
     .style('align-items','center')
     .style('justify-content','center')
-    .style('height','78vh')
+    .style('height','73vh')
 
     const svg = d3.select('#tree-placeholder')
         .append('svg')
