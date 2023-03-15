@@ -77,11 +77,11 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     var view = isMobile ? 10 : -dy * padding / 2
 
     d3.select('#tree-placeholder')
-    .style('display','flex')
-    .style('flex-direction','column')
-    .style('align-items','center')
-    .style('justify-content','center')
-    .style('height','73vh')
+    // .style('display','flex')
+    // .style('flex-direction','column')
+    // .style('align-items','center')
+    // .style('justify-content','center')
+    // .style('height','73vh')
 
     const svg = d3.select('#tree-placeholder')
         .append('svg')
