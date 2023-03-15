@@ -2,7 +2,8 @@
 
 let force = ((state = 'koko',selector = '#force-placeholder') => {
 
-    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+    // var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : ((window.innerWidth/window.innerHeight < 11/16) ? true :false)
 
     ////////////////////////////////////
     //////////// svg setup /////////////
@@ -33,11 +34,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     const width = svgWidth - margin.left - margin.right
 
     // add SVG
-    // d3.select(selector)
-    // .style('display','flex')
-    // .style('flex-direction','column')
-    // .style('align-items','center')
-    // .style('justify-content','center')
 
     const svg = d3.select(selector)
         .append('svg')

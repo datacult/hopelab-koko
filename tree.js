@@ -16,7 +16,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         path, children, sort,
         intervention_type = data_map.intervention_type
 
-        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : ((window.innerWidth/window.innerHeight < 11/16) ? true :false)
 
 
 
@@ -75,13 +75,6 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
 
     // add SVG
     var view = isMobile ? 10 : -dy * padding / 2
-
-    d3.select('#tree-placeholder')
-    // .style('display','flex')
-    // .style('flex-direction','column')
-    // .style('align-items','center')
-    // .style('justify-content','center')
-    // .style('height','73vh')
 
     const svg = d3.select('#tree-placeholder')
         .append('svg')
