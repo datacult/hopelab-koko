@@ -793,10 +793,13 @@ function block_update(val) {
         d3.selectAll('#anno_nokoko')
         .attr('display','none')
 
+        text_opacity = d3.scaleLinear()
+        .domain([.05,.25])
+        .range([1,1])
 
         d3.selectAll('.no_low').style('stroke-opacity',ind == 2 ? low_stroke(prog) : (ind > 2 ? low_stroke(1) : low_stroke(0))).style('fill-opacity',ind == 2 ? low_opacity(prog) : (ind > 2 ? low_opacity(1) : low_opacity(0)))
         d3.selectAll('.no_high').style('stroke-opacity',ind == 2 ? high_stroke(prog) : (ind > 2 ? high_stroke(1) : high_stroke(0))).style('fill-opacity',ind == 2 ? high_opacity(prog) : (ind > 2 ? high_opacity(1) : high_opacity(0)))
-        d3.selectAll('.groupcaught3').style('opacity',1)
+        d3.selectAll('.groupcaught3').style('opacity',text_opacity(prog))
           
     } else {
         header.text(nokoko_text)
