@@ -126,7 +126,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .style('opacity',0)
     
             var img_div = txt.append('div')
-                .attr('class','background')
+                .attr('class','int-background')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
                 .style('margin-top',isMobile ? '12vh':'5vh')
@@ -769,7 +769,6 @@ function block_update(val) {
         int_image.style('display','none')
         int_gif.style('display','block')
         img_div.style('background','#22194D')
-        .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 5.5vw')
 
         low_opacity = d3.scaleLinear()
         .domain([0,1])
@@ -808,7 +807,6 @@ function block_update(val) {
         int_image.style('display','block')
         int_gif.style('display','none')
         img_div.style('background','#1B172F')
-        .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
 
         low_opacity = d3.scaleLinear()
         .domain([0,1])
