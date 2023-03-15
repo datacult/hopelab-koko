@@ -158,9 +158,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
 
     svg.selectAll('.domain').remove();
 
-    if (isMobile){
-        svg.selectAll('.tick').attr('font-size','14px')
-    }
+    svg.selectAll('.tick').attr('font-size','14px')
 
     ////////////////////////////////////
     //////////// add to DOM ////////////
@@ -238,14 +236,14 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("y", 50)
         .text("In 2022, Koko helped")
         .attr("class", "h2")
-        .style("font-size", isMobile?"2em":"1.5em")
+        .style("font-size", isMobile?"2em":"2.5em")
 
     svg.append("text")
         .attr("x", isMobile ? 25 : 100)
-        .attr("y", isMobile ? 95 : 80)
+        .attr("y", isMobile ? 95 : 100)
         .text("close to 100,000 users")
         .attr("class", "h2")
-        .style("font-size", isMobile?"2em":"1.5em")
+        .style("font-size", isMobile?"2em":"2.5em")
         .append("tspan")
         .text(" 7")
         .attr("font-size", "0.5em")
@@ -256,13 +254,13 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("x", 0)
         .attr("y", 0)
         .text("Total Users Helped")
-        .attr("font-size", isMobile ? "1.2em" : "0.8em")
+        .attr("font-size", isMobile ? "1.2em" : "1em")
         .attr("alignment-baseline", "middle")
         .attr("transform", `translate(${-margin.left / 2},${height}) rotate(270)`);
 
 
     // axis arrow
-
+            var a_start = 150, a_end = 180
     svg.append("line")
         .attr("fill", "none")
         .attr("stroke", "black")
@@ -270,8 +268,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke-linecap", "round")
         .attr("x1", -margin.left / 2)
         .attr("x2", -margin.left / 2)
-        .attr("y1", isMobile ? height-180: height - 120)
-        .attr("y2", isMobile ? height-210:height - 150)
+        .attr("y1", isMobile ? height-180: height - a_start)
+        .attr("y2", isMobile ? height-210:height - a_end)
 
 
     svg.append("line")
@@ -281,8 +279,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke-linecap", "round")
         .attr("x1", (-margin.left / 2) - 7)
         .attr("x2", (-margin.left / 2))
-        .attr("y1", isMobile ? height-210+7:(height - 150) + 7)
-        .attr("y2", isMobile ? height-210:(height - 150))
+        .attr("y1", isMobile ? height-210+7:(height - a_end) + 7)
+        .attr("y2", isMobile ? height-210:(height - a_end))
 
     svg.append("line")
         .attr("fill", "none")
@@ -291,8 +289,8 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("stroke-linecap", "round")
         .attr("x1", -(margin.left / 2) + 7)
         .attr("x2", -(margin.left / 2))
-        .attr("y1", isMobile ? height-210+7:(height - 150) + 7)
-        .attr("y2", isMobile ? height-210:(height - 150))
+        .attr("y1", isMobile ? height-210+7:(height - a_end) + 7)
+        .attr("y2", isMobile ? height-210:(height - a_end))
 
     //scroll update function
     function update() {
