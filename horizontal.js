@@ -542,39 +542,39 @@ function calcGrid(value) {
         .attr("display",isMobile ? 'none': 1)
 
 var force_opacity = d3.scaleLinear()
-    .domain([.15,1])
+    .domain([.15,.85])
     .range([0,1])
 
 var missed_opacity = d3.scaleLinear()
-    .domain([0,1])
+    .domain([0,.85])
     .range([.2,.45])
 
 var missed_stroke = d3.scaleLinear()
-    .domain([0,1])
+    .domain([0,.85])
     .range([.2,1])
 
 var low_stroke = d3.scaleLinear()
-.domain([0,1])
+.domain([0,.85])
 .range([1,1])
 
 var high_stroke = d3.scaleLinear()
-.domain([0,1])
+.domain([0,.85])
 .range([1,1])
 
 var low_opacity = d3.scaleLinear()
-    .domain([0,1])
+    .domain([0,.85])
     .range([.45,.7])
 
 var high_opacity = d3.scaleLinear()
-    .domain([0,1])
+    .domain([0,.85])
     .range([.45,.85])
 
 var size_width = d3.scaleLinear()
-    .domain([0,1])
+    .domain([0,.85])
     .range([rect_width,rect_width_tree])
 
 var size_height = d3.scaleLinear()
-    .domain([0,1])
+    .domain([0,.85])
     .range([rect_height,rect_height_tree])
 
 var text_position_x = d3.scaleLinear()
