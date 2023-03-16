@@ -384,7 +384,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }) 
 
 
-    var start_x = isMobile ? (width-rect_width_tree*10)/2 : width*135/1440, start_y = isMobile ? 100 : (((window.innerWidth/window.innerHeight)>16/9.75) ? height*170/900 - 75 : height*170/900)
+    var start_x = isMobile ? (width-rect_width_tree*5)/2 : width*135/1440, start_y = isMobile ? 100 : (((window.innerWidth/window.innerHeight)>16/9.75) ? height*170/900 - 75 : height*170/900)
 
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
@@ -422,7 +422,7 @@ function calcGrid(value) {
         .attr('stroke-width',3)
         .attr('stroke-linecap','round')
         .attr('fill','none')
-        .attr('transform','translate('+(start_x-7)+','+(302)+')')
+        .attr('transform','translate('+(start_x-4)+','+(302)+')')
         .attr('opacity',0)
         .attr('display',isMobile ? 1 : 'none')
 
