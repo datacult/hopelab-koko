@@ -4,6 +4,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
 
     // var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
     var isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true :false
+    var isIpad = /iPad/i.test(navigator.userAgent) ? true : false
 
     ////////////////////////////////////
     //////////// svg setup /////////////
@@ -80,7 +81,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('margin','0')
             .style('text-align','center')
             .style('color','#ffffff')
-            .style('font-size',isMobile ? '1.1rem': '1.5rem')
+            .style('font-size',isMobile ? '1.1rem': (isIpad ? '1.2rem': '1.5rem'))
             .style('line-height','135%')
             .style('font-family','Avenirnext 08')
             .style('font-weight','400')
@@ -94,7 +95,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('margin','0')
             .style('text-align','center')
             .style('color','#ffffff')
-            .style('font-size',isMobile ? '.9rem': '1rem')
+            .style('font-size',isMobile ? '.9rem': (isIpad ? '.9rem': '1rem'))
             .style('line-height','135%')
             .style('font-family','Avenirnext 08')
             .style('font-weight',isMobile ? '400':'300')
@@ -134,7 +135,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                 .attr('class','int-background')
                 .style('padding',isMobile ? '0 3vw 3vh 3vw': '0 3vw')
                 .style('background','#22194D')
-                .style('margin-top',isMobile ? '12vh':'5vh')
+                .style('margin-top',isMobile ? '12vh':(isIpad ? '15vh': '5vh'))
                 .style('display','flex')
                 .style('flex-direction','column')
                 .style('align-items','center')
@@ -438,7 +439,7 @@ function calcGrid(value) {
         .attr('transform', isMobile ? 'translate('+(265)+','+(302)+') rotate(90)' : 'translate('+img_x2+','+img_y+')')
     
     
-    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 380 : img_y+45, line_height = (window.innerWidth/window.innerHeight > 16/10) ? 22 : 24, font_size = (window.innerWidth/window.innerHeight > 16/10) ? 18 : 20;
+    var shift = 100, ba_x1 = img_x1+shift, ba_x2 = isMobile ? width/2 : img_x2+shift, ba_x3 = img_x3+shift, ba_y = isMobile ? 380 : img_y+45, line_height = (window.innerWidth/window.innerHeight > 16/10) ? 22 : (isIpad ? 30: 24), font_size = (window.innerWidth/window.innerHeight > 16/10) ? 18 : (isIpad ? 24: 20);
 
     var base_annotation = svg.append('text')
         .attr('class','annotation')
@@ -485,6 +486,7 @@ function calcGrid(value) {
         .attr('class','annotation')
         .attr('x',ba_x2)
         .attr('y',ba_y)
+        .attr('text-anchor',isMobile ? 'middle' : 'start')
         .attr('fill','white')
         .attr('font-size',font_size)
         .attr('opacity',0);
