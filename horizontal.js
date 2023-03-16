@@ -752,6 +752,7 @@ scroll(d3.selectAll('.step'));
 
 scroll.on('progress', function (index, progress) {
     prog = progress, ind = index
+    console.log(ind+': '+prog)
     if (index == 2 && progress >= 0 && progress < .85){
         updatePosition(progress)
     } else if (index == 2 && progress >= .85 && progress < 1){
