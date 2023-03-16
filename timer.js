@@ -239,13 +239,13 @@ let time = ((selector = '#timer') => {
         d3.select('.time-bar')
         .transition()
         .duration(1500)
-        .attr('width',x(timeSpent))
+        .attr('width',timeSpent > 10 ? x(10.11) : x(timeSpent))
 
         d3.select('.time-text')
-        .text(timeSpent)
+        .text(timeSpent > 10 ? '10+' :timeSpent)
         .transition()
         .duration(1500)
-        .attr('x',x(timeSpent)-10)
+        .attr('x',timeSpent > 10 ? (x(10.11)-10) : (x(timeSpent)-10))
 
         d3.selectAll('#time-1')
         .text(isMobile ? `${timeSpent} minutes`:`It took you ${timeSpent} minutes`)
