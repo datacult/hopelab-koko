@@ -1,3 +1,7 @@
+// © 2023 Data Culture
+// Released under the ISC license.
+// https://studio.datacult.com/ 
+
 'use strict'
 
 let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {

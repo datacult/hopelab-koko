@@ -1,11 +1,14 @@
+<!-- 
+    // © 2023 Data Culture
+    // Released under the ISC license.
+    // https://studio.datacult.com/ 
+-->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
-        <!-- <link href="https://datacult.github.io/hopelab-koko/Avenir%20Next.ttc" rel="stylesheet"> -->
-        
         <style>
             svg text{
                 font-family: 'Avenir Next';
@@ -24,7 +27,6 @@
             #force-placeholder, #koko-nokoko {
                 position: sticky;
                 top:0;
-                /* left:0; */
             }
 
             #koko-nokoko {
@@ -41,14 +43,10 @@
 
             #h-scroll {
                 background-color: #22194D;
-                /* display: flex;
-                flex-direction: row; */
             }
 
             #scroll {
                 background-color: #22194D;
-                /* display: flex;
-                flex-direction: row; */
             }
 
             .force-headline {
@@ -59,10 +57,6 @@
             .annotation {
                 font-family: Avenir;
             }
-
-            /* #intervention {
-                background: lightskyblue
-            } */
         </style>
     </head>
     <body>  
@@ -85,13 +79,9 @@
     <script src="scroller.js"></script>
     <script src="horizontal.js"></script>
     <script src="tree.js"></script>
-    <!-- <script src="force_text.js"></script> -->
     <script>
         async function init(){
             
-            // let data = await d3.csv('bars.csv', d3.autoType)
-
-            // let mapping = {x:'category', y:'value'}
             let flow = await d3.json('tree.json', d3.autoType)
 
             let tree_vis = tree(flow,{
@@ -103,7 +93,6 @@
             var intervention = intervention_select.value;
            
             let force_vis = force(state = intervention)
-            // let f_text = force_text(state = intervention)
 
             intervention_select.addEventListener("change", function() {
     				intervention = intervention_select.value
@@ -112,8 +101,6 @@
 
             });
 
-
-            // let launch_vis = launch()
         }
         init()
 

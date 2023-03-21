@@ -1,3 +1,8 @@
+<!-- 
+    // © 2023 Data Culture
+    // Released under the ISC license.
+    // https://studio.datacult.com/ 
+-->
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,13 +31,9 @@
             <option value="nokoko">Without Koko</option>
           </select>
             <div id="tree-placeholder"></div>
-            <!-- <div id="start" class="step"></div>
-            <div id="middle" class="step"></div>
-            <div id="end" class="step"></div> -->
         </div>
     </body>
     <script src="https://d3js.org/d3.v6.min.js"></script>
-    <!-- <script src="scroller.js"></script> -->
     <script src="tree.js"></script>
     <script>
         async function init(){
@@ -51,11 +52,6 @@
     				intervention = intervention_select.value
                     tree_vis.update(intervention)
             });
-
-            //  FileAttachment("flare.json").json()
-            
-
-                            // let launch_vis = launch()
         }
         init()
 

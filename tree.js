@@ -1,3 +1,7 @@
+// © 2023 Data Culture
+// Released under the ISC license.
+// https://studio.datacult.com/ 
+
 'use strict'
 
 let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
@@ -176,9 +180,9 @@ if (view == 0){
         console.log(og_position_call_path)
         console.log(og_position_text_path)
         d3.select('#call').attr('transform',og_position_call)
-        d3.select('#call_path').attr('d',isMobile ? 'M318,-425C397.5,-425,397.5,-525,477,-525':'M350,-212.5C437.5,-212.5,437.5,-262.5,525,-262.5')
+        d3.select('#call_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-450,477,-450':'M350,-200C437.5,-200,437.5,-225,525,-225')
         d3.select('#text').attr('transform',og_position_text)
-        d3.select('#text_path').attr('d',isMobile ? 'M318,-425C397.5,-425,397.5,-425,477,-425':'M350,-212.5C437.5,-212.5,437.5,-212.5,525,-212.5')
+        d3.select('#text_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-350,477,-350':'M350,-200C437.5,-200,437.5,-175,525,-175')
         d3.selectAll('.node-group0').attr('opacity',1)
         d3.selectAll('.link_group0').attr('opacity',1)
         bg_rect.attr('fill','#22194D')
