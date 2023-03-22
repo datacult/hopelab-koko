@@ -6,7 +6,6 @@
 
 let force = ((state = 'koko',selector = '#force-placeholder') => {
 
-    // var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : false
     var isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true :false
     var isIpad = /iPad/i.test(navigator.userAgent) ? true : false
 
@@ -27,16 +26,9 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
         top: 10,
         bottom: 10
     }
-
-    // responsive width & height
-    // const svgWidth = isMobile ? 375 : 1440 
-    // const svgHeight = isMobile ? 812 : 630//850//900 
     
     const svgWidth = isMobile ? screen.width : 1440 
-    const svgHeight = isMobile ? screen.height : 630//850//900 
-
-    // console.log(screen.width)
-    // console.log(screen.height)
+    const svgHeight = isMobile ? screen.height : 630
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -53,6 +45,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
 
         var defs = svg.append('defs')
 
+        //add box blur filter
         var blur_filter = defs.append('filter')
             .attr('id','blur1')
             .attr('x',0)
@@ -62,6 +55,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .attr('stdDeviation','3')
 
 
+        //add first stage text
         var header_text = `When a platform uses Koko’s detection library, they are able to identify significantly more high-risk content.`
         var desc_text = 'The detection library is constantly evolving to mirror trends and new types of concerning content.'
     
@@ -117,6 +111,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('font-weight',isMobile ? '400':'300')
     
     
+            //add third stage text
             var koko_int_text = `When redirected to Koko, the user is greeted with a variety of support options in an accessible way. `
             
             var nokoko_int_text = 'In the case where keywords are detected, most platforms redirect to a major crisis line.'
@@ -179,6 +174,8 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     ////////////////////////////////////
     //////////////wrangle///////////////
     ////////////////////////////////////
+
+    //build force layout data
     var caught_value = 50, missed_value = 10, nokoko_low = 20, nokoko_high = 20, tree_count = 12
 
     var node_data = [], num_boxes = 100;
@@ -224,6 +221,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     }
 
 
+    //add positioining and settings for stage 3 boxes
     for (let i = 0; i < (tree_count); i++) {
         i < tree_count*2/3 ? node_data[i].group = 2 : node_data[i].group = 3
         i >= tree_count*2/3 ? node_data[i].class = node_data[i].class+3 : null
@@ -238,6 +236,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
 
     const nodes = data.nodes.map(d => Object.create(d))
 
+    //set up grid layout data
     var grid_layout = []
     for (let i = 0; i < num_boxes; i++) {
         grid_layout.push({ "id": i+1, "x": 0, "y": 0, "sim_x": 0, "sim_y": 0})
@@ -273,16 +272,19 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .on("end", dragended)
     }
 
+    //calculate force layout
     var center_y =  isMobile ? height / 3 : height/2, width_factor = isMobile ? 2.5 : 2, center_x = width/width_factor, r = isMobile ? 225 : 280
     var simulation 
     
     if (isMobile) {
         simulation = d3.forceSimulation(nodes)
         .force("charge", d3.forceManyBody().strength(10))
+        //leave empty circle for text
         .force("radial", d3.forceRadial(d =>  225 , width / width_factor, center_y))
         .force("collide", d3.forceCollide().radius(d => d.r))
         .force("center", d3.forceCenter(width / width_factor, center_y))
         .force("bounding-circle", () => {
+            //reposition nodes onto page
             var min = 540 
             , max = 550
             nodes.forEach(node => {
@@ -299,8 +301,9 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
         .force("collide", d3.forceCollide().radius(d => d.r))
         .force("center", d3.forceCenter(width / width_factor, center_y))
         .force("bounding-circle", () => {
-            var min = 150//290
-            , max = 160//300
+            //reposition nodes to leave empty space for text
+            var min = 150
+            , max = 160
             nodes.forEach(node => {
                     if (node.y < 30) {
                         node.x = Math.floor(Math.random() * (center_x-r)) + (center_x*.1)//... // new x position
@@ -313,7 +316,6 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
                       } 
                       
                       if (node.y > center_y - 110 && node.y < center_y + 100 && node.x > center_x - r && node.x < center_x+r) {
-                        // node.x = Math.floor(Math.random() * 270) + 240//... // new x position
                         node.y = Math.floor(Math.random() * (center_y+min)) + (center_y-max)//... // new y position
                       } 
         
@@ -333,8 +335,10 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     //////////// add to DOM ////////////
     ////////////////////////////////////  
 
+    //set rectangle sizes for force and tree map
     var rect_height = 25, rect_width = 75, rect_width_tree = isMobile ? 70 : 70, rect_height_tree = isMobile ? 50 :50;
 
+    //draw nodes
     const node = svg.append("g")
             .selectAll(".forceword")
             .data(nodes)
@@ -345,6 +349,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style("opacity",d => d.force == "no" ? 0 : 1)
             .call(drag(simulation));
 
+    //add node text (blurred)
     const node_text = node
             .selectAll(".forceword_word")
             .data(d=>[d])
@@ -356,9 +361,9 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('text-anchor','middle')
             .style("fill","white")
             .style('font-size',16)
-            // .style('filter','blur(3px)');
             .attr('filter','url(#blur1)')
 
+    //add node rect
     const node_rect = node
             .selectAll(".forceword_rect")
             .data(d=>[d])
@@ -374,6 +379,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('stroke-opacity',d => d.opacity == 0.45 ? 1 : d.opacity)
             .style('stroke-width','2px');
 
+    //position text within rect
     var text_x = rect_width/2, text_y = 16.5
 
     simulation.on("tick", () => {
@@ -400,9 +406,10 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
       })
     }) 
 
-
+//calculate grid dimensions and layout
     var start_x = isMobile ? (width-rect_width_tree*5)/2 : width*135/1440, start_y = isMobile ? 100 : (((window.innerWidth/window.innerHeight)>16/9.75) ? height*170/900 - 75 : height*170/900)
 
+//calculate individual node positions within grid/tree map
 function calcGrid(value) {
     var columns = 10, rows = num_boxes/columns;
 
@@ -416,6 +423,7 @@ function calcGrid(value) {
     /////////// treemap setup //////////
     ////////////////////////////////////
 
+    //add grid/tree map annotations
     var img_x = start_x+(10*rect_width_tree), img_y = isMobile ? start_y+(10*rect_height_tree)+12 : start_y+(6*rect_height_tree)+12
     var img_x1 = width+50, img_x2 = img_x+20, img_x3 = img_x2-(width*1.1);
 
@@ -553,6 +561,7 @@ function calcGrid(value) {
         .text(`aren't detected by these platforms.`)
         .attr('display','none');
 
+// add line to stage 3
     svg.append('line')
         .attr('class','int_line')
         .attr('stroke','#B5B5B5')
@@ -564,8 +573,7 @@ function calcGrid(value) {
         .attr('y2',height/2+2.35)
         .attr("display",isMobile ? 'none': 1)
 
-    // text.style('height',document.getElementById('svg-horiz').getBBox().height+'px')
-
+//create tween scrolling scales
 var force_opacity = d3.scaleLinear()
     .domain([.15,.85])
     .range([0,1])
@@ -658,8 +666,10 @@ var div_text_out = d3.scaleLinear()
         .domain([0,.25])
         .range([1,0])
 
+//tween scrolling for stage 1 > 2
 function updatePosition(percent) {
 
+    //update annotations
     tr_bracket
     .attr('opacity',bracket_op(percent))
 
@@ -674,6 +684,7 @@ function updatePosition(percent) {
 
     text.style('opacity',div_text_out(percent))
 
+//move boxes
    node_data.forEach(d => {
     calcGrid(d.id)
 
@@ -692,7 +703,6 @@ function updatePosition(percent) {
     d3.select('#textword'+d.id)
     .attr('x',grid_position_x(percent)+text_position_x(percent))
     .attr('y',grid_position_y(percent)+text_position_y(percent))
-    // .attr('transform',isMobile ? 'scale('+mobile_font(percent)+')' : '')
 
     d3.select('#word'+d.id)
     .attr('x',grid_position_x(percent))
@@ -704,7 +714,9 @@ function updatePosition(percent) {
 })
 }
 
+//tween scrolling for stage 2>3
 function updatePosition2(percent){
+    //update annotations
     tr_bracket
     .attr('opacity',bracket_op2(percent))
 
@@ -722,8 +734,10 @@ function updatePosition2(percent){
     int_gif.style('opacity',div_text_in(percent))
     img_div.style('opacity',div_bg_in(percent))
 
+    //move line
     d3.select('.int_line').attr('x1',line_pos(percent))
 
+    //move boxes (shift most off screen and reposition last few)
     node_data.forEach(d => {
 
         if (d.group !== 1 && !(isMobile)) {
@@ -770,9 +784,9 @@ var scroll = scroller()
 // pass in .step selection as the steps
 scroll(d3.selectAll('.step'));
 
+//run tween scrolling functions
 scroll.on('progress', function (index, progress) {
     prog = progress, ind = index
-    console.log(ind+': '+prog)
     if (index == 2 && progress >= 0 && progress < .85){
         updatePosition(progress)
     } else if (index == 2 && progress >= .85 && progress < 1){
@@ -787,6 +801,7 @@ scroll.on('progress', function (index, progress) {
     }
 });
 
+//toggle update
 function block_update(val) {
     if (val == 'koko'){
         header.text(header_text)
@@ -836,8 +851,6 @@ function block_update(val) {
         bg_text
         .style('background','#1B172FE6')
         .style('box-shadow','0 0 15px 15px #1B172FE6')
-        // int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
-        // .style('width',isMobile ? '60vw': '30vw')
 
         int_image.style('display','block')
         int_gif.style('display','none')

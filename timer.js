@@ -72,12 +72,6 @@ let time = ((selector = '#timer') => {
         .domain([0, 10])
         .range([0, width]);
 
-
-    // // Add Y axis
-    // const y = d3.scaleLinear()
-    //     .domain([0, 10])
-    //     .range([height, 0]);
-
     ////////////////////////////////////
     //////////// Axis ////////////
     //////////////////////////////////// 
@@ -89,8 +83,6 @@ let time = ((selector = '#timer') => {
             5,
             7.5,10
         ]
-        
-
 
     const xAxis = d3.axisBottom(x)
         .tickFormat((d, i) => ['0', '2.5', '5', '7.5', '10'][i])
@@ -126,6 +118,7 @@ let time = ((selector = '#timer') => {
     //////////// add to DOM ////////////
     //////////////////////////////////// 
 
+    //background rectangle
     svg.append('rect')
         .attr('class','time-bg')
         .attr('height',bar_size)
@@ -135,6 +128,7 @@ let time = ((selector = '#timer') => {
         .attr('fill','#ffffff')
         .attr('opacity',.3)
 
+    //headline text
     svg.append("text")
         .attr('id','time-1')
         .attr("x", 0)
@@ -154,6 +148,7 @@ let time = ((selector = '#timer') => {
         .style('fill','#ffffff')
         .attr('display',isMobile ? 'none' : 1);
 
+    // mobile headline text
     svg.append("text")
         .attr("x", 0)
         .attr("y", 0)
@@ -191,6 +186,7 @@ let time = ((selector = '#timer') => {
         .style('font-size','2.2em')
         .attr('display',isMobile ? 1 : 'none');
 
+    // draw end line
     svg.append("line")
         .attr('class','time-end')
         .attr("fill", "none")
@@ -202,6 +198,7 @@ let time = ((selector = '#timer') => {
         .attr("y1", height-bar_size)
         .attr("y2", height)
 
+    //draw responsive bar
     var timeSpent = 0
     var time_size = height/6
     svg.append('rect')
@@ -212,7 +209,8 @@ let time = ((selector = '#timer') => {
         .attr('y',(height-bar_size)+(bar_size-time_size)/2)
         .attr('fill','#ffffff')
         .attr('rx','6')
-
+    
+    //draw small rect to cover rounding on start of bar
     svg.append('rect')
         .attr('height',time_size)
         .attr('width',6)
@@ -220,6 +218,7 @@ let time = ((selector = '#timer') => {
         .attr('y',(height-bar_size)+(bar_size-time_size)/2)
         .attr('fill','#ffffff')
 
+    //label text
     svg.append('text')
         .attr('class','time-text')
         .attr('x',x(0))
@@ -239,18 +238,20 @@ let time = ((selector = '#timer') => {
         //round to minutes and set time variable
         timeSpent = Math.round(timeSpentOnPage/6)/10
 
-
+        //update bar length (with max value for over 10 min)
         d3.select('.time-bar')
         .transition()
         .duration(1500)
         .attr('width',timeSpent > 10 ? x(10.11) : x(timeSpent))
 
+        //update label text
         d3.select('.time-text')
         .text(timeSpent > 10 ? '10+' :timeSpent)
         .transition()
         .duration(1500)
         .attr('x',timeSpent > 10 ? (x(10.11)-10) : (x(timeSpent)-10))
 
+        //update headline text
         d3.selectAll('#time-1')
         .text(isMobile ? `${timeSpent} minutes`:`It took you ${timeSpent} minutes`)
 

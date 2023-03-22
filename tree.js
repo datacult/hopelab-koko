@@ -2,6 +2,11 @@
 // Released under the ISC license.
 // https://studio.datacult.com/ 
 
+//adapted from Observable code
+// Copyright 2021 Observable, Inc.
+// Released under the ISC license.
+// https://observablehq.com/@d3/tree
+
 'use strict'
 
 let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
@@ -17,13 +22,9 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         strokeLinejoin, // stroke line join for links
         strokeLinecap, // stroke line cap for links
         curve = d3.curveBumpX,
-        path, children, sort,
-        intervention_type = data_map.intervention_type
+        path, children, sort
 
-        // var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true : ((window.innerWidth/window.innerHeight < 11/16) ? true :false)
-        var isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true :false
-
-
+    var isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? true :false
 
     // If id and parentId options are specified, or the path option, use d3.stratify
     // to convert tabular data to a hierarchy; otherwise we assume that the data is
@@ -39,7 +40,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
   
     // Compute the layout.
     const dx = isMobile ? 100 : 55.882;
-    const dy = isMobile ? 159 : 175//width / (root.height + padding);
+    const dy = isMobile ? 159 : 175;
     tree().nodeSize([dx, dy])(root);
     
   
@@ -83,13 +84,13 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
 
     const svg = d3.select('#tree-placeholder')
         .append('svg')
-        // .attr('width','60vw')
         .attr("viewBox", `${view} ${x0 - dx} ${svgWidth} ${svgHeight}`)
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     var lnk = root.links()
-  
+
+    //draw links
     svg.append("g")
         .attr("fill", "none")
         .attr("stroke", stroke)
@@ -106,6 +107,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
               .x(d => d.y)
               .y(d => d.x));
 
+    //draw nodes
     const node = svg.append("g")
       .selectAll(".node-group")
       .data(root.descendants())
@@ -115,6 +117,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
       .attr('opacity',1)
       .attr("transform", d => `translate(${d.y-r*0.5},${d.x})`);
 
+    //add background rect to nodes
     var bg_rect = node.append('rect')
     .attr("opacity", d => d.depth == 2 ? 0 : 1)
     .attr('fill','#22194D')
@@ -130,8 +133,10 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
     .attr('rx',10)
     .attr('transform','translate(0,'+r/-2+')')
 
+    //hide origin node
     d3.select('#detection').attr('opacity',0)
 
+    //add node labels
     node.append("text")
         .attr("dy", "0.32em")
         .attr('x',r*5/2)
@@ -151,6 +156,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
         .attr('y1',0)
         .attr('y2',0)
 
+//compute original positions
 var view = 0, og_position_call, og_position_text, koko_positions = [], og_position_call_path, og_position_text_path;
 if (view == 0){
     og_position_call = document.getElementById('call').getAttribute('transform')
@@ -175,10 +181,10 @@ if (view == 0){
 
 }
 
+//update position on toggle
   function tree_update(val) {
     if (val == 'koko'){
-        console.log(og_position_call_path)
-        console.log(og_position_text_path)
+        //expand tree (move from node and increase opacity)
         d3.select('#call').attr('transform',og_position_call)
         d3.select('#call_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-450,477,-450':'M350,-223.528C437.5,-223.528,437.5,-251.469,525,-251.469')
         d3.select('#text').attr('transform',og_position_text)
@@ -187,12 +193,12 @@ if (view == 0){
         d3.selectAll('.link_group0').attr('opacity',1)
         bg_rect.attr('fill','#22194D')
         koko_positions.forEach(el => {
-            // console.log('move: '+el.name+el.node+el.path),
             d3.select('#'+el.name).attr('transform',el.node)
             d3.select('#'+el.name+'_path').attr('d',el.path)
              
         })
     } else {
+        //collapse tree (move to node and decrease opacity)
         d3.select('#call').attr('transform','translate(250,-75)')
         d3.select('#call_path').attr('d','M0,0C125,0,125,-75,250,-75')
         d3.select('#text').attr('transform','translate(250,75)')

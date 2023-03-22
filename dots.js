@@ -39,6 +39,7 @@ let dots = ((selector = '#dot-placeholder') => {
     // add SVG
     d3.select(`${selector} svg`).remove();
 
+    //center dots on page
     d3.select(selector)
     .style('display','flex')
     .style('flex-direction','column')
@@ -97,9 +98,10 @@ let dots = ((selector = '#dot-placeholder') => {
 
         socialObserver.observe(social);
 
+    //set dot size
     var r = 5;
 
-    //calc num based on width/2/r and height/2/r
+    //calc num of dots based on width/2/r and height/2/r
     var num_row = Math.round((height/2)/(r*2)), num_col = Math.round((width/2)/(r))
     var num_dots = num_col*num_row;
     var grid_layout = []
@@ -114,6 +116,7 @@ let dots = ((selector = '#dot-placeholder') => {
     //////////// add to DOM ////////////
     //////////////////////////////////// 
     var cols, extra 
+//calc layout of social % usage
 function socialPerc(val){
     cols = Math.ceil(num_col*val/100)-1
     var tot_dots = Math.round(num_dots*val/100)
@@ -122,6 +125,7 @@ function socialPerc(val){
 
 socialPerc(62)
 
+//calculate grid layout
 function calcGrid(value) {
 
     var start_x = width/2-r*num_col, start_y = height/2-r*2*num_row;
@@ -165,6 +169,7 @@ grid_layout.forEach(val => {
 var data_grid, ids = [];
 randomSelect(grid_layout,42,18,'white',.25,'#F1C54A',1)
 
+//add dots to DOM
 const dot = svg
         .selectAll(".dots")
         .data(data_grid)
@@ -177,7 +182,7 @@ const dot = svg
         .style("fill",d => ids.includes(d.id) ? d.fill : 'white')
         .style("opacity",d => ids.includes(d.id) ? d.opacity : .7)
 
-
+//randomly select and color dots
 function randomSelect(arr,val,val2,fill,opac,fill2,opac2) {
     var perc = Math.round(num_dots*val/100)
     var perc2 = Math.round(num_dots*val2/100)

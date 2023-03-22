@@ -296,14 +296,16 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .attr("y1", isMobile ? height-210+7:(height - a_end) + 7)
         .attr("y2", isMobile ? height-210:(height - a_end))
 
-    //scroll update function
+    //scroll update function for drawing graph when it comes into view
     function update() {
+        //load area from bottom
         areaChart.transition()
         .duration(1500)
         .attr("d", function(d) {
             return area(d)
         })
 
+        //draw line
         line 
         .transition()
         .ease(d3.easeLinear)
@@ -311,6 +313,7 @@ let area = ((selector = '#area', data = [], mapping = { x: "x", y: "y" }) => {
         .delay(1500)
         .duration(1500)
 
+        //draw arrow
         d3.selectAll('.arrow')
         .transition()
         .attr('opacity',1)

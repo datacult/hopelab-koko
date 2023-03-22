@@ -12,9 +12,6 @@ let research = ((selector) => {
     //////////// svg setup /////////////
     ////////////////////////////////////
 
-    // var body = d3.select(selector)
-    // body.html("")
-
     // margins for SVG
     const margin = isMobile ? {
         left: 10,
@@ -30,9 +27,7 @@ let research = ((selector) => {
 
     // responsive width & height
     const svgWidth = isMobile ? 720 : window.innerWidth*.5 
-    const svgHeight = isMobile ? screen.height*1.6 : window.innerHeight*.78 //700//900 
-    // const svgWidth = window.innerWidth
-    // const svgHeight = window.innerHeight
+    const svgHeight = isMobile ? screen.height*1.6 : window.innerHeight*.78 
 
     // helper calculated variables for inner width & height
     const height = svgHeight - margin.top - margin.bottom
@@ -91,6 +86,7 @@ let research = ((selector) => {
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
+    //draw before and after axes
     var axis_padding = 40, top_padding = 40, bottom_padding = height*.9
     svg.append('line')
         .attr('stroke','black')
@@ -106,6 +102,7 @@ let research = ((selector) => {
         .attr('y1',top_padding)
         .attr('y2',bottom_padding) 
 
+    //add labels
     var label_size = isMobile ? 25 : 16, y_shift = isMobile ? 100 : 70
 
         svg.append('text')
@@ -161,6 +158,7 @@ let research = ((selector) => {
 
     var defs = svg.append('defs')
 
+    //add grey background gradient
     var grad = defs.append('linearGradient')
         .attr('id','poly-grad')
         .attr('x1',0)
@@ -180,9 +178,9 @@ let research = ((selector) => {
         .attr('d',`M${axis_padding},${y_axis(12.48)},V${top_padding},H${(width-axis_padding)},V${y_axis(12.8)},Z`)
         .attr('fill','url(#poly-grad)')
 
-
+//draw lines
     function drawLine(start_val,end_val,color,state){
-        //add arrow to y-axis
+        //add arrows
         defs
             .append("marker")
             .attr("id", "arrow"+state)
@@ -195,7 +193,8 @@ let research = ((selector) => {
             .append("path")
             .style('fill',color)
             .attr("d", "M4.76566 1.12179C4.5704 0.926526 4.25382 0.926526 4.05856 1.12179L0.876576 4.30377C0.681313 4.49903 0.681313 4.81561 0.876576 5.01088C1.07184 5.20614 1.38842 5.20614 1.58368 5.01088L4.41211 2.18245L7.24054 5.01088C7.4358 5.20614 7.75238 5.20614 7.94764 5.01088C8.14291 4.81561 8.14291 4.49903 7.94764 4.30377L4.76566 1.12179ZM4.91211 1.97534L4.91211 1.47534L3.91211 1.47534L3.91211 1.97534L4.91211 1.97534Z")
-
+        
+        //add lines
         svg.append('line')
             .attr('class','outcome')
             .attr('id',state)
@@ -210,6 +209,7 @@ let research = ((selector) => {
     drawLine(12.31,11.54,'#7059E7','koko')
     drawLine(12.48,12.8,'#1B172F','nokoko')
 
+    //add annotations
     var ta_x = width-axis_padding-(width/18), ta_y = y_axis(15.5), ea_y = y_axis(11), line_height = isMobile ? '3%' :'24', font_size = isMobile ? 32 : 18;
 
     var trad_annotation = svg.append('text')
@@ -326,10 +326,11 @@ let research = ((selector) => {
         .text('.');
 
 //scroll update function
+//load in stages
 function update(val){
 
     if (val == 1) {
-
+    //load labels
         d3.select('.before')
         .transition()
         .duration(1000)
@@ -375,6 +376,7 @@ function update(val){
         .attr('opacity',0)
 
     } else if (val == 2){
+    //load control group line
         d3.select('.before')
         .transition()
         .duration(1000)
@@ -420,6 +422,7 @@ function update(val){
         .attr('opacity',0)
 
     } else if (val == 3){
+    // load text group line
         d3.select('.before')
         .transition()
         .duration(1000)
