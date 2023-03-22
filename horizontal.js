@@ -563,7 +563,7 @@ function calcGrid(value) {
         .attr('y2',height/2+7.5)
         .attr("display",isMobile ? 'none': 1)
 
-    text.style('height',document.getElementById('svg-horiz').getBBox().height+'px')
+    // text.style('height',document.getElementById('svg-horiz').getBBox().height+'px')
 
 var force_opacity = d3.scaleLinear()
     .domain([.15,.85])
