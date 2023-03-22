@@ -80,6 +80,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('opacity',1)
 
             const bg_text = text.append('div')
+            .attr('class','force-background')
             .style('display','flex')
             .style('flex-direction','column')
             .style('align-items','center')
@@ -790,6 +791,9 @@ function block_update(val) {
     if (val == 'koko'){
         header.text(header_text)
         desc.text(desc_text)
+        bg_text
+        .style('background','#22194DE6')
+        .style('box-shadow','0 0 15px 15px #22194DE6')
         int_text.text(koko_int_text)
         int_image.style('display','none')
         int_gif.style('display','block')
@@ -829,6 +833,9 @@ function block_update(val) {
         header.text(nokoko_text)
         desc.text('')
         int_text.text(nokoko_int_text)
+        bg_text
+        .style('background','#1B172FE6')
+        .style('box-shadow','0 0 15px 15px #1B172FE6')
         // int_image.attr('src','https://datacult.github.io/hopelab-koko/Message.png')
         // .style('width',isMobile ? '60vw': '30vw')
 
