@@ -47,6 +47,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
     const svg = d3.select(selector)
         .append('svg')
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
+        .attr('id','svg-horiz')
         .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
@@ -59,6 +60,7 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .append('feGaussianBlur')
             .attr('in','SourceGraphic')
             .attr('stdDeviation','3')
+
 
         var header_text = `When a platform uses Koko’s detection library, they are able to identify significantly more high-risk content.`
         var desc_text = 'The detection library is constantly evolving to mirror trends and new types of concerning content.'
@@ -76,9 +78,18 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('height','100%')
             .style('width','100%')
             .style('opacity',1)
+
+            const bg_text = text.append('div')
+            .style('display','flex')
+            .style('flex-direction','column')
+            .style('align-items','center')
+            .style('justify-content','center')
+            .style('background','#22194DE6')
+            .style('box-shadow','0 0 15px 15px #22194DE6')
+
     
     
-        var header = text.append('p')
+        var header = bg_text.append('p')
             .attr('class','force-headline')
             .text(header_text)
             .style('width',isMobile ? '250px': '450px')
@@ -90,9 +101,9 @@ let force = ((state = 'koko',selector = '#force-placeholder') => {
             .style('font-family','Avenirnext 08')
             .style('font-weight','400')
     
-            text.append('br')
+            bg_text.append('br')
     
-        var desc = text.append('p')
+        var desc = bg_text.append('p')
             .attr('class','force-desc')
             .text(desc_text)
             .style('width',isMobile ? '250px': '400px')
@@ -551,6 +562,8 @@ function calcGrid(value) {
         .attr('y1',height/2+7.5)
         .attr('y2',height/2+7.5)
         .attr("display",isMobile ? 'none': 1)
+
+    text.style('height',document.getElementById('svg-horiz').getBBox().height+'px')
 
 var force_opacity = d3.scaleLinear()
     .domain([.15,.85])
