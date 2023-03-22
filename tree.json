@@ -2,7 +2,7 @@
     "name": "detection",
     "children": [
         {
-        "name": "crisis lines",
+        "name": "global crisis lines",
         "value": 0,
         "children": [
             {
