@@ -559,8 +559,8 @@ function calcGrid(value) {
         .attr('stroke-linecap','round')
         .attr('x1',width+50)
         .attr('x2',width+50)
-        .attr('y1',height/2+7.5)
-        .attr('y2',height/2+7.5)
+        .attr('y1',height/2+2.35)
+        .attr('y2',height/2+2.35)
         .attr("display",isMobile ? 'none': 1)
 
     // text.style('height',document.getElementById('svg-horiz').getBBox().height+'px')
