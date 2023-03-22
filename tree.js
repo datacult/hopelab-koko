@@ -38,7 +38,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
   
   
     // Compute the layout.
-    const dx = isMobile ? 120 : 80;
+    const dx = isMobile ? 100 : 60;
     const dy = isMobile ? 159 : 175//width / (root.height + padding);
     tree().nodeSize([dx, dy])(root);
     
