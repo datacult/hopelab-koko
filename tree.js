@@ -38,7 +38,7 @@ let tree = ((data, data_map = {width: 640, intervention_type: 'koko'}) => {
   
   
     // Compute the layout.
-    const dx = isMobile ? 110 : 55.882;
+    const dx = isMobile ? 100 : 55.882;
     const dy = isMobile ? 159 : 175//width / (root.height + padding);
     tree().nodeSize([dx, dy])(root);
     
@@ -180,9 +180,9 @@ if (view == 0){
         console.log(og_position_call_path)
         console.log(og_position_text_path)
         d3.select('#call').attr('transform',og_position_call)
-        d3.select('#call_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-450,477,-450':'M350,-200C437.5,-200,437.5,-225,525,-225')
+        d3.select('#call_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-450,477,-450':'M350,-223.528C437.5,-223.528,437.5,-251.469,525,-251.469')
         d3.select('#text').attr('transform',og_position_text)
-        d3.select('#text_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-350,477,-350':'M350,-200C437.5,-200,437.5,-175,525,-175')
+        d3.select('#text_path').attr('d',isMobile ? 'M318,-400C397.5,-400,397.5,-350,477,-350':'M350,-223.528C437.5,-223.528,437.5,-195.587,525,-195.587')
         d3.selectAll('.node-group0').attr('opacity',1)
         d3.selectAll('.link_group0').attr('opacity',1)
         bg_rect.attr('fill','#22194D')
